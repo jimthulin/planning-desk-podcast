@@ -1,0 +1,32 @@
+{
+  "show": "The Planning Desk",
+  "artist": "The Planning Desk",
+  "voices": {
+    "F": {"name": "Anna", "voice_id": "99Hm6N8psCBzc1JwEVR2", "elevenlabs_voice": "Riley - Charismatic News Anchor/Host"},
+    "M": {"name": "Erik", "voice_id": "tNIuvXGG5RnGdTbvfnPR", "elevenlabs_voice": "Robert - American standard broadcaster"}
+  },
+  "tts": {
+    "model_id": "eleven_v4",
+    "fallback_model_id": "eleven_v3",
+    "output_format": "mp3_44100_128",
+    "voice_settings": {},
+    "max_workers": 3
+  },
+  "jingles": {
+    "intro_prompt": "Modern news podcast intro, 10 seconds, instrumental. Confident pulsing synth bass, crisp electronic percussion, bright rising piano motif, polished broadcast feel. Builds quickly and resolves cleanly on the last beat.",
+    "outro_prompt": "Modern news podcast outro, 10 seconds, instrumental. Same sound as the intro: pulsing synth bass, crisp electronic percussion, bright piano motif. Settles down and ends on a clean final chord with a short natural decay.",
+    "duration_sec": 10
+  },
+  "mix": {
+    "gap_between_lines_sec": 0.30,
+    "gap_between_segments_sec": 0.75,
+    "gap_after_intro_sec": 0.25,
+    "gap_before_outro_sec": 0.60,
+    "intro_fade_out_sec": 1.5,
+    "outro_fade_in_sec": 0.3,
+    "outro_fade_out_sec": 1.2,
+    "loudness_lufs": -16,
+    "true_peak_db": -1.5,
+    "mp3_bitrate": "128k"
+  }
+}
