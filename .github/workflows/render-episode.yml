@@ -18,6 +18,10 @@ on:
         description: "Also render the video"
         type: boolean
         default: true
+      youtube_private_test:
+        description: "Upload this run to YouTube as a private video, even if it's a test script"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -149,7 +153,9 @@ jobs:
           gh release upload "episode-$STEM" "build/out/planning-desk-$STEM.mp4" --clobber
 
       - name: Upload to YouTube
-        if: ${{ inputs.fake != true && inputs.video != false && !endsWith(steps.pick.outputs.stem, '-test') && env.YOUTUBE_REFRESH_TOKEN != '' }}
+        if: ${{ inputs.fake != true && inputs.video != false && env.YOUTUBE_REFRESH_TOKEN != '' && (inputs.youtube_private_test == true || !endsWith(steps.pick.outputs.stem, '-test')) }}
+        env:
+          YOUTUBE_PRIVACY: ${{ inputs.youtube_private_test == true && 'private' || '' }}
         run: |
           pip install -q google-api-python-client google-auth
           python youtube_upload.py "${{ steps.pick.outputs.stem }}"

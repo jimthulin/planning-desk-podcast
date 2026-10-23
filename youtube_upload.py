@@ -101,7 +101,7 @@ def main() -> int:
             "defaultAudioLanguage": "en",
         },
         "status": {
-            "privacyStatus": yt.get("privacy", "public"),
+            "privacyStatus": os.environ.get("YOUTUBE_PRIVACY") or yt.get("privacy", "public"),
             "selfDeclaredMadeForKids": False,
             "containsSyntheticMedia": True,
         },
