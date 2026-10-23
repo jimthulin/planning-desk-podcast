@@ -2,7 +2,9 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {AbsoluteFill, Audio, Sequence, continueRender, delayRender, staticFile, useCurrentFrame} from 'remotion';
 import {C, FONT, FPS, segmentLabel} from './theme.js';
 import {Background} from './components/Background.jsx';
-import {Header, HostBar} from './components/Chrome.jsx';
+import {Header} from './components/Chrome.jsx';
+import {Captions} from './components/Captions.jsx';
+import {mentionTimes} from './timing.js';
 import {Scene} from './components/Scene.jsx';
 import {TitleCard, OutroCard} from './templates/Bookends.jsx';
 import {Headline, Takeaway, QuickHit} from './templates/Cards.jsx';
@@ -10,6 +12,8 @@ import {Stat} from './templates/Stat.jsx';
 import {Bars} from './templates/Bars.jsx';
 import {ListCard} from './templates/ListCard.jsx';
 import {RouteMap} from './templates/RouteMap.jsx';
+import {Timeline} from './templates/Timeline.jsx';
+import {Flow} from './templates/Flow.jsx';
 
 const TEMPLATES = {
   headline: Headline,
@@ -19,7 +23,11 @@ const TEMPLATES = {
   bars: Bars,
   list: ListCard,
   route: RouteMap,
+  timeline: Timeline,
+  flow: Flow,
 };
+
+const ITEM_TEMPLATES = new Set(['list', 'timeline', 'flow']);
 
 const useFonts = () => {
   const [handle] = useState(() => delayRender('fonts'));
@@ -94,7 +102,14 @@ export const Episode = (props) => {
           content = <SegmentCard segment={props.lines[s.cue.line].segment} />;
         } else {
           const T = TEMPLATES[s.cue.template];
-          content = <T {...(s.cue.props || {})} dur={dur} />;
+          const cueProps = s.cue.props || {};
+          let itemFrames;
+          if (ITEM_TEMPLATES.has(s.cue.template)) {
+            const items = cueProps.items || cueProps.steps || [];
+            const sceneLines = props.lines.filter((l) => l.start_sec >= s.from - 0.01 && l.start_sec < s.to);
+            itemFrames = mentionTimes(items, sceneLines, s.from, s.to).map((sec) => Math.round((sec - s.from) * FPS));
+          }
+          content = <T {...cueProps} dur={dur} itemFrames={itemFrames} />;
         }
         return (
           <Sequence key={i} from={from} durationInFrames={dur} layout="none">
@@ -103,7 +118,7 @@ export const Episode = (props) => {
         );
       })}
       {inShow && <Header show={props.show} week={props.week} segment={line ? line.segment : ''} />}
-      {inShow && <HostBar speaking={speaking} envelope={props.envelope} frame={frame} />}
+      {inShow && <Captions line={line} t={t} />}
       {props.audioFile && <Audio src={staticFile(props.audioFile)} />}
     </AbsoluteFill>
   );

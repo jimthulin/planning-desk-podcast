@@ -173,6 +173,15 @@
       }
     },
     {
+      "line": 2,
+      "template": "headline",
+      "props": {
+        "kicker": "The Planning Desk",
+        "title": "Fifteen minutes on supply chain planning and design",
+        "detail": "Every Sunday, with Anna and Erik"
+      }
+    },
+    {
       "line": 4,
       "template": "list",
       "props": {
@@ -184,11 +193,23 @@
           },
           {
             "label": "Suez",
-            "detail": "Four Asia to Europe loops return from mid-November"
+            "detail": "Four Asia to Europe loops return from mid-November",
+            "say": "Gemini"
           },
           {
             "label": "Brussels",
-            "detail": "Leaders want safeguards on Chinese chemicals and machinery"
+            "detail": "Safeguards on Chinese chemicals and machinery",
+            "say": "E U leaders"
+          },
+          {
+            "label": "Sweden",
+            "detail": "A grocer redraws its warehouse map",
+            "say": "Swedish grocer"
+          },
+          {
+            "label": "AI",
+            "detail": "A reality check in German supply chains",
+            "say": "reality check"
           }
         ]
       }
@@ -213,6 +234,40 @@
         "label": "ships through the strait",
         "note": "About 70 percent below pre-conflict levels. Threat level: severe",
         "source": "UKMTO via SupplyChainBrain"
+      }
+    },
+    {
+      "line": 9,
+      "template": "timeline",
+      "props": {
+        "kicker": "Strait of Hormuz",
+        "title": "The attacks kept coming",
+        "items": [
+          {
+            "label": "5 to 11 Oct",
+            "detail": "Record week, 12 vessels",
+            "say": "record week",
+            "alert": true
+          },
+          {
+            "label": "11 Oct",
+            "detail": "Six hit in one day",
+            "say": "October",
+            "alert": true
+          },
+          {
+            "label": "17 Oct",
+            "detail": "More tankers attacked",
+            "say": "Tankers",
+            "alert": true
+          },
+          {
+            "label": "18 Oct",
+            "detail": "A tug struck",
+            "say": "tug",
+            "alert": true
+          }
+        ]
       }
     },
     {
@@ -488,22 +543,31 @@
         "items": [
           {
             "label": "AE2",
-            "detail": "Swaps Tangier for Rotterdam westbound"
+            "detail": "Swaps Tangier for Rotterdam westbound",
+            "say": "A E two also"
           },
           {
-            "label": "AE11",
-            "detail": "Ningbo, Shanghai, Xingang"
+            "label": "Ports",
+            "detail": "Ningbo, Shanghai and Xingang",
+            "say": "Ningbo"
           },
           {
-            "label": "AE19",
-            "detail": "Ningbo, Shanghai, Xingang"
+            "label": "Dates",
+            "detail": "15 to 22 November",
+            "say": "fifteenth"
           },
           {
-            "label": "AE18",
-            "detail": "New service"
+            "label": "Caveat",
+            "detail": "Schedules can still change",
+            "say": "schedules"
+          },
+          {
+            "label": "Outlook",
+            "detail": "Full Suez recovery expected in Q1 2027",
+            "say": "full Suez"
           }
         ],
-        "footer": "Departures 15 to 22 November. Source: Maersk"
+        "footer": "Sources: Maersk, Freightos"
       }
     },
     {
@@ -512,6 +576,14 @@
       "props": {
         "kicker": "For planners",
         "text": "Plan a dated step-down of transit times and safety stock. Too fast, and bunched arrivals leave you short."
+      }
+    },
+    {
+      "line": 15,
+      "template": "takeaway",
+      "props": {
+        "kicker": "The job this quarter",
+        "text": "A calendar, not a cut. Date each step-down and check it against actual arrivals."
       }
     },
     {
@@ -550,12 +622,55 @@
       }
     },
     {
+      "line": 20,
+      "template": "takeaway",
+      "props": {
+        "kicker": "Contract season",
+        "text": "Price Q1 contracts on the coming capacity release, not today's spot rate."
+      }
+    },
+    {
       "line": 21,
       "template": "headline",
       "props": {
         "kicker": "Brussels",
         "title": "EU leaders ask for safeguards on Chinese chemicals and machinery",
         "detail": "Quotas and tariffs on the table. Timing before year-end unclear.",
+        "source": "Euronews"
+      }
+    },
+    {
+      "line": 23,
+      "template": "list",
+      "props": {
+        "title": "Also in the EU pipeline",
+        "items": [
+          {
+            "label": "Timing",
+            "detail": "Unclear before year-end",
+            "say": "timing"
+          },
+          {
+            "label": "Tool 1",
+            "detail": "Supplier diversification for strategic products",
+            "say": "diversify"
+          },
+          {
+            "label": "Tool 2",
+            "detail": "Solidarity mechanism against countermeasures",
+            "say": "solidarity"
+          }
+        ],
+        "footer": "Source: Euronews"
+      }
+    },
+    {
+      "line": 25,
+      "template": "headline",
+      "props": {
+        "kicker": "EU and China",
+        "title": "A hybrid car deal didn't soften the tone",
+        "detail": "Leaders kept the wording on macroeconomic imbalances",
         "source": "Euronews"
       }
     },
@@ -569,6 +684,14 @@
         "label": "maximum duration, applied to all origins",
         "note": "Model a quota plus tariff scenario on the whole category",
         "source": "Euronews"
+      }
+    },
+    {
+      "line": 28,
+      "template": "takeaway",
+      "props": {
+        "kicker": "For buyers",
+        "text": "Run the scenario on the whole category, then decide where to buy."
       }
     },
     {
@@ -611,6 +734,14 @@
       }
     },
     {
+      "line": 33,
+      "template": "takeaway",
+      "props": {
+        "kicker": "Network design",
+        "text": "Resilience now carries a price in the business case."
+      }
+    },
+    {
       "line": 34,
       "template": "bars",
       "props": {
@@ -640,6 +771,36 @@
       }
     },
     {
+      "line": 36,
+      "template": "flow",
+      "props": {
+        "kicker": "Meds",
+        "title": "Where the move went wrong",
+        "steps": [
+          {
+            "label": "Automation",
+            "detail": "Went to plan",
+            "say": "Automation"
+          },
+          {
+            "label": "IT",
+            "detail": "Went to plan",
+            "say": "I T"
+          },
+          {
+            "label": "Staff training",
+            "detail": "Took longer",
+            "say": "training"
+          },
+          {
+            "label": "Sales and delivery",
+            "detail": "Hit until October",
+            "say": "sales"
+          }
+        ]
+      }
+    },
+    {
       "line": 37,
       "template": "takeaway",
       "props": {
@@ -655,6 +816,44 @@
         "title": "St1 plans fuel from forecast to refinery on one platform",
         "detail": "About 1,150 stations in Finland, Sweden, Norway and the UK",
         "source": "RELEX newsroom"
+      }
+    },
+    {
+      "line": 40,
+      "template": "flow",
+      "props": {
+        "kicker": "St1 and RELEX",
+        "title": "One planning flow, forecast to refinery",
+        "steps": [
+          {
+            "label": "Demand forecast",
+            "say": "demand forecasts"
+          },
+          {
+            "label": "Terminal inventory",
+            "say": "terminal"
+          },
+          {
+            "label": "Replenishment",
+            "say": "replenishment"
+          },
+          {
+            "label": "Jetty loading",
+            "say": "jetty"
+          },
+          {
+            "label": "Refinery supply",
+            "say": "refinery"
+          }
+        ]
+      }
+    },
+    {
+      "line": 41,
+      "template": "takeaway",
+      "props": {
+        "kicker": "Market signal",
+        "text": "Retail planning platforms are moving into process-industry scheduling."
       }
     },
     {
@@ -682,6 +881,14 @@
       }
     },
     {
+      "line": 45,
+      "template": "takeaway",
+      "props": {
+        "kicker": "The real gap",
+        "text": "Governance and the business case, not the technology."
+      }
+    },
+    {
       "line": 46,
       "template": "headline",
       "props": {
@@ -692,16 +899,45 @@
       }
     },
     {
+      "line": 47,
+      "template": "takeaway",
+      "props": {
+        "kicker": "Before you believe 10x",
+        "text": "Ask for benchmarks on your own models."
+      }
+    },
+    {
       "line": 48,
       "template": "stat",
       "props": {
         "kicker": "Semiconductor supply chain",
+        "value": 95,
+        "suffix": "%",
+        "prefix": "about ",
+        "label": "of tier one supply from the US, Europe or Japan",
+        "note": "200 inputs mapped across 100 categories",
+        "source": "Semiconductor Industry Association"
+      }
+    },
+    {
+      "line": 50,
+      "template": "stat",
+      "props": {
+        "kicker": "Below tier one",
         "value": 50,
         "suffix": "%",
         "prefix": "about ",
-        "label": "of input categories rate medium or high vulnerability",
-        "note": "Tier one looks diversified. The sub-tiers set the real risk",
+        "label": "of categories rate medium or high vulnerability",
+        "note": "Rare earths from China and Russia. Some capacity takes a decade to build",
         "source": "Semiconductor Industry Association"
+      }
+    },
+    {
+      "line": 51,
+      "template": "takeaway",
+      "props": {
+        "kicker": "Blind spot",
+        "text": "Tier one looks diversified. The sub-tiers set the real risk."
       }
     },
     {
@@ -712,6 +948,33 @@
         "title": "Constellation Brands destocked too far, then had to refill",
         "detail": "Shipments and depletions now expected within one percent",
         "source": "Supply Chain Dive"
+      }
+    },
+    {
+      "line": 54,
+      "template": "flow",
+      "props": {
+        "kicker": "Constellation Brands",
+        "title": "The refill",
+        "steps": [
+          {
+            "label": "Raise shipments",
+            "say": "raised shipments"
+          },
+          {
+            "label": "Redirect product",
+            "say": "redirected"
+          },
+          {
+            "label": "Inventory normal",
+            "say": "back to normal"
+          },
+          {
+            "label": "New supply chain chief",
+            "detail": "From November",
+            "say": "chief supply chain"
+          }
+        ]
       }
     },
     {
@@ -741,6 +1004,14 @@
         ],
         "decimals": 1,
         "source": "ABB"
+      }
+    },
+    {
+      "line": 57,
+      "template": "takeaway",
+      "props": {
+        "kicker": "ABB customers",
+        "text": "Watch the quoted lead times on electrification gear."
       }
     },
     {
@@ -777,6 +1048,18 @@
       }
     },
     {
+      "line": 61,
+      "template": "stat",
+      "props": {
+        "kicker": "Sweden, September",
+        "value": 77.6,
+        "decimals": 1,
+        "label": "input price index",
+        "note": "Part of the PMI rise came from longer supplier delivery times",
+        "source": "Silf/Swedbank"
+      }
+    },
+    {
       "line": 62,
       "template": "stat",
       "props": {
@@ -789,33 +1072,40 @@
     },
     {
       "line": 63,
-      "template": "list",
+      "template": "timeline",
       "props": {
-        "title": "Events ahead",
+        "kicker": "Events ahead",
+        "title": "Your next six weeks",
         "items": [
           {
-            "label": "26 to 28 Oct",
-            "detail": "Kinaxis Kinexions EMEA, Barcelona"
+            "label": "26 Oct",
+            "detail": "Kinaxis Kinexions, Barcelona",
+            "say": "Kinaxis"
           },
           {
             "label": "6 Nov",
-            "detail": "Meds Q3 report"
+            "detail": "Meds Q3 report",
+            "say": "Meds"
           },
           {
-            "label": "10 to 12 Nov",
-            "detail": "Intermodal Europe, Rotterdam"
+            "label": "10 Nov",
+            "detail": "Intermodal Europe, Rotterdam",
+            "say": "Intermodal"
           },
           {
             "label": "15 Nov",
-            "detail": "First Gemini sailings via Suez"
+            "detail": "Gemini via Suez",
+            "say": "Gemini"
           },
           {
             "label": "17 Nov",
-            "detail": "SKF capital markets day, Gothenburg"
+            "detail": "SKF capital markets day",
+            "say": "capital markets"
           },
           {
             "label": "1 Dec",
-            "detail": "SKF Vertevo listing"
+            "detail": "Vertevo listing, TFEST",
+            "say": "Vertevo"
           }
         ]
       }
@@ -828,6 +1118,14 @@
         "title": "EU Deforestation Regulation applies from 30 December",
         "detail": "Supplier geolocation data belongs in your master data now",
         "source": "Check dates on EUR-Lex"
+      }
+    },
+    {
+      "line": 65,
+      "template": "takeaway",
+      "props": {
+        "kicker": "Note",
+        "text": "That status comes from a vendor. Check the dates on EUR-Lex."
       }
     },
     {
@@ -900,6 +1198,14 @@
       "props": {
         "kicker": "This week",
         "text": "Hormuz is worse. Suez is reopening. Brussels is building trade walls."
+      }
+    },
+    {
+      "line": 75,
+      "template": "headline",
+      "props": {
+        "kicker": "Next week",
+        "title": "Can carriers hold rates as Suez capacity returns?"
       }
     }
   ]

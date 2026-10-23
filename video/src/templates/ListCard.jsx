@@ -3,26 +3,37 @@ import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
 import {C, FONT} from '../theme.js';
 import {Kicker} from './Cards.jsx';
 
-export const ListCard = ({title, items = [], footer}) => {
+// Items slide in, then each one lights up as the hosts mention it.
+export const ListCard = ({title, items = [], footer, itemFrames = []}) => {
   const frame = useCurrentFrame();
   const big = items.length <= 4;
+  const rowH = big ? 92 : 70;
+  let active = -1;
+  itemFrames.forEach((f, i) => { if (frame >= f) active = i; });
+  const markerY = interpolate(frame, [itemFrames[active] ?? 0, (itemFrames[active] ?? 0) + 10], [Math.max(0, active - 1) * rowH, Math.max(0, active) * rowH], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   return (
-    <AbsoluteFill style={{padding: '170px 160px 190px 160px', justifyContent: 'center', fontFamily: FONT}}>
+    <AbsoluteFill style={{padding: '170px 160px 200px 160px', justifyContent: 'center', fontFamily: FONT}}>
       <Kicker>{title}</Kicker>
-      <div style={{marginTop: 40, display: 'flex', flexDirection: 'column', gap: big ? 30 : 20}}>
+      <div style={{marginTop: 40, position: 'relative'}}>
+        {active >= 0 && (
+          <div style={{position: 'absolute', left: -40, top: markerY + (big ? 14 : 10), width: 10, height: big ? 52 : 40, borderRadius: 5, background: C.amber}} />
+        )}
         {items.map((it, i) => {
           const start = 8 + i * 7;
           const x = interpolate(frame, [start, start + 16], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
           const e = 1 - Math.pow(1 - x, 3);
+          const isOn = i === active;
+          const dim = active >= 0 && !isOn ? 0.42 : 1;
+          const pop = isOn ? interpolate(frame, [itemFrames[i], itemFrames[i] + 8], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}) : 0;
           return (
-            <div key={i} style={{display: 'flex', alignItems: 'baseline', gap: 40, opacity: e, transform: `translateX(${(1 - e) * 50}px)`}}>
+            <div key={i} style={{height: rowH, display: 'flex', alignItems: 'center', gap: 40, opacity: e * dim, transform: `translateX(${(1 - e) * 50 + pop * 16}px)`}}>
               <div style={{minWidth: big ? 300 : 260, color: C.amber, fontSize: big ? 44 : 34, fontWeight: 800}}>{it.label}</div>
-              <div style={{color: C.white, fontSize: big ? 48 : 38, fontWeight: 600, lineHeight: 1.2}}>{it.detail}</div>
+              <div style={{color: C.white, fontSize: big ? 46 : 36, fontWeight: isOn ? 700 : 600, lineHeight: 1.2}}>{it.detail}</div>
             </div>
           );
         })}
       </div>
-      {footer && <div style={{color: C.muted, fontSize: 26, marginTop: 40}}>{footer}</div>}
+      {footer && <div style={{color: C.muted, fontSize: 26, marginTop: 36}}>{footer}</div>}
     </AbsoluteFill>
   );
 };

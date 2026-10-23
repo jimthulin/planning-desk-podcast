@@ -4,13 +4,15 @@ import {C, FONT, fmt} from '../theme.js';
 import {useEnter} from '../components/Scene.jsx';
 import {Kicker, Source} from './Cards.jsx';
 
-export const Stat = ({kicker, value, decimals = 0, prefix = '', suffix = '', label, note, source}) => {
+export const Stat = ({kicker, value, decimals = 0, prefix = '', suffix = '', label, note, source, dur = 300}) => {
   const frame = useCurrentFrame();
   const x = interpolate(frame, [6, 46], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const eased = 1 - Math.pow(1 - x, 4);
   const shown = fmt(value * eased, decimals);
   const p = useEnter(8, 20);
   const q = useEnter(30, 20);
+  const ring = !(suffix.trim() === '%' && value <= 100);
+  const textW = ring ? 1080 : 1400;
   return (
     <AbsoluteFill style={{padding: '180px 160px 190px 160px', justifyContent: 'center', fontFamily: FONT}}>
       {kicker && <Kicker>{kicker}</Kicker>}
@@ -19,9 +21,26 @@ export const Stat = ({kicker, value, decimals = 0, prefix = '', suffix = '', lab
         <span style={{fontSize: 260, fontWeight: 900, letterSpacing: -6, lineHeight: 1, fontVariantNumeric: 'tabular-nums'}}>{shown}</span>
         {suffix && <span style={{fontSize: 120, fontWeight: 900, color: C.amber}}>{suffix}</span>}
       </div>
-      <div style={{color: C.white, fontSize: 52, fontWeight: 700, marginTop: 18, opacity: p, transform: `translateY(${(1 - p) * 20}px)`}}>{label}</div>
-      {note && <div style={{color: C.white, opacity: 0.7 * q, fontSize: 34, fontWeight: 500, marginTop: 20, maxWidth: 1400}}>{note}</div>}
+      <div style={{color: C.white, fontSize: 52, fontWeight: 700, marginTop: 18, maxWidth: textW, opacity: p, transform: `translateY(${(1 - p) * 20}px)`}}>{label}</div>
+      {note && <div style={{color: C.white, opacity: 0.7 * q, fontSize: 34, fontWeight: 500, marginTop: 20, maxWidth: textW}}>{note}</div>}
+      {suffix.trim() === '%' && value <= 100 && (
+        <div style={{position: 'relative', width: 1200, height: 22, borderRadius: 11, background: 'rgba(138,152,170,0.16)', marginTop: 34}}>
+          <div style={{position: 'absolute', left: 0, top: 0, bottom: 0, width: `${value * eased}%`, borderRadius: 11, background: C.amber,
+            boxShadow: `0 0 ${18 + 10 * Math.sin(frame / 15)}px rgba(242,163,58,0.45)`}} />
+        </div>
+      )}
       <Source delay={36}>{source}</Source>
+      {!(suffix.trim() === '%' && value <= 100) && (
+        <svg width={520} height={520} style={{position: 'absolute', right: 120, top: 280, opacity: 0.9 * p}}>
+          <g transform={`rotate(${frame * 0.6} 260 260)`}>
+            <circle cx={260} cy={260} r={200} fill="none" stroke="rgba(138,152,170,0.18)" strokeWidth={3} strokeDasharray="4 14" />
+          </g>
+          <circle cx={260} cy={260} r={160} fill="none" stroke={C.amber} strokeWidth={10} strokeLinecap="round"
+            strokeDasharray={`${2 * Math.PI * 160 * eased * 0.78} ${2 * Math.PI * 160}`} transform={`rotate(${-90 + frame * 0.25} 260 260)`} />
+          <circle cx={260} cy={260} r={120} fill="none" stroke={C.teal} strokeOpacity={0.6} strokeWidth={4}
+            strokeDasharray={`${2 * Math.PI * 120 * 0.3} ${2 * Math.PI * 120}`} transform={`rotate(${90 - frame * 0.9} 260 260)`} />
+        </svg>
+      )}
     </AbsoluteFill>
   );
 };

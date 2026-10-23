@@ -38,7 +38,15 @@ export const RouteMap = ({kicker, title, routes = [], points = [], pad = 8}) => 
       const pts = r.points.map((c) => projection(c));
       let len = 0;
       for (let i = 1; i < pts.length; i++) len += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]);
-      return {...r, d: 'M' + pts.map((p) => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' L'), len};
+      const cum = [0];
+      for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+      const at = (dist) => {
+        let i = 1;
+        while (i < cum.length - 1 && cum[i] < dist) i++;
+        const f = (dist - cum[i - 1]) / Math.max(1e-6, cum[i] - cum[i - 1]);
+        return [pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * f, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * f];
+      };
+      return {...r, d: 'M' + pts.map((p) => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' L'), len, at};
     });
     const projPoints = points.map((p) => ({...p, xy: projection([p.lon, p.lat])}));
     return {countryPaths, projRoutes, projPoints};
@@ -66,8 +74,22 @@ export const RouteMap = ({kicker, title, routes = [], points = [], pad = 8}) => 
               <path key={i} d={r.d} fill="none" stroke={faded ? C.muted : C.amber} strokeOpacity={faded ? 0.55 : 1}
                 strokeWidth={faded ? 5 : 8} strokeLinecap="round" strokeLinejoin="round"
                 strokeDasharray={faded ? `14 12` : `${r.len} ${r.len}`}
-                strokeDashoffset={faded ? 0 : r.len * (1 - e)} opacity={faded ? e : 1} />
+                strokeDashoffset={faded ? -frame * 0.8 : r.len * (1 - e)} opacity={faded ? e : 1} />
             );
+          })}
+          {geo.projRoutes.filter((r) => r.style !== 'faded').map((r, i) => {
+            const ready = interpolate(frame, [12 + i * 22 + 45, 12 + i * 22 + 60], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+            const ships = 4;
+            return Array.from({length: ships}, (_, k) => {
+              const f = ((frame / 260) + k / ships) % 1;
+              const [sx, sy] = r.at(f * r.len);
+              return (
+                <g key={`s${i}-${k}`} opacity={ready}>
+                  <circle cx={sx} cy={sy} r={14} fill={C.amber} opacity={0.25} />
+                  <circle cx={sx} cy={sy} r={7} fill={C.white} />
+                </g>
+              );
+            });
           })}
         </g>
         <rect x={BOX.x} y={BOX.y} width={BOX.w} height={BOX.h} rx={28} fill="none" stroke={C.line} strokeWidth={2} />

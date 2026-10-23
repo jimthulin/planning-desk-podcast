@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill} from 'remotion';
+import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
 import {C, FONT} from '../theme.js';
 import {useEnter} from '../components/Scene.jsx';
 
@@ -23,30 +23,52 @@ export const Source = ({children, delay = 20}) => {
   return <div style={{color: C.muted, fontSize: 24, fontWeight: 500, marginTop: 36, opacity: p}}>Source: {children}</div>;
 };
 
-export const Headline = ({kicker, title, detail, source}) => {
-  const p = useEnter(4, 22);
-  const q = useEnter(14, 20);
+// Words rise in one by one; `perWord` frames apart, starting at `delay`.
+export const Words = ({text, delay = 4, perWord = 3, style}) => {
+  const frame = useCurrentFrame();
+  return (
+    <div style={style}>
+      {(text || '').split(' ').map((w, i) => {
+        const x = interpolate(frame, [delay + i * perWord, delay + i * perWord + 10], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+        const e = 1 - Math.pow(1 - x, 3);
+        return <span key={i} style={{display: 'inline-block', opacity: e, transform: `translateY(${(1 - e) * 28}px)`, marginRight: '0.25em'}}>{w}</span>;
+      })}
+    </div>
+  );
+};
+
+export const Headline = ({kicker, title, detail, source, dur = 300}) => {
+  const frame = useCurrentFrame();
+  const nWords = (title || '').split(' ').length;
+  const q = useEnter(10 + nWords * 3, 20);
+  const line = interpolate(frame, [0, dur], [0, 1], {extrapolateRight: 'clamp'});
   return (
     <Stage>
       {kicker && <Kicker>{kicker}</Kicker>}
-      <div style={{color: C.white, fontSize: 84, fontWeight: 900, lineHeight: 1.08, marginTop: 28, maxWidth: 1500, opacity: p, transform: `translateY(${(1 - p) * 40}px)`}}>
-        {title}
-      </div>
+      <Words text={title} style={{color: C.white, fontSize: 84, fontWeight: 900, lineHeight: 1.08, marginTop: 28, maxWidth: 1500}} />
+      <div style={{height: 6, width: 1500 * line, maxWidth: 1500, background: 'linear-gradient(90deg, rgba(242,163,58,0.9), rgba(242,163,58,0))', borderRadius: 3, marginTop: 30}} />
       {detail && (
-        <div style={{color: C.white, opacity: 0.75 * q, fontSize: 38, fontWeight: 500, lineHeight: 1.3, marginTop: 30, maxWidth: 1400}}>{detail}</div>
+        <div style={{color: C.white, opacity: 0.78 * q, fontSize: 40, fontWeight: 500, lineHeight: 1.3, marginTop: 26, maxWidth: 1400, transform: `translateY(${(1 - q) * 16}px)`}}>{detail}</div>
       )}
-      <Source>{source}</Source>
+      <Source delay={24 + nWords * 3}>{source}</Source>
     </Stage>
   );
 };
 
-export const Takeaway = ({kicker, text}) => {
-  const p = useEnter(4, 24);
+// The "so what": words build up over the first half of the scene, roughly as the host says it.
+export const Takeaway = ({kicker, text, dur = 300}) => {
+  const frame = useCurrentFrame();
+  const p = useEnter(0, 16);
+  const words = (text || '').split(' ');
+  const perWord = Math.max(3, Math.min(9, Math.floor((dur * 0.5) / Math.max(1, words.length))));
+  const glow = 0.35 + 0.25 * Math.sin(frame / 18);
+  const barH = interpolate(frame, [0, 24], [0, 100], {extrapolateRight: 'clamp'});
   return (
     <Stage>
-      <div style={{borderLeft: `10px solid ${C.amber}`, paddingLeft: 56, opacity: p, transform: `translateX(${(1 - p) * 40}px)`}}>
+      <div style={{position: 'relative', paddingLeft: 66, opacity: p}}>
+        <div style={{position: 'absolute', left: 0, top: 0, width: 10, height: `${barH}%`, borderRadius: 5, background: C.amber, boxShadow: `0 0 ${30 * glow}px rgba(242,163,58,${glow})`}} />
         {kicker && <div style={{color: C.amber, fontSize: 30, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase'}}>{kicker}</div>}
-        <div style={{color: C.white, fontSize: 76, fontWeight: 800, lineHeight: 1.15, marginTop: 22, maxWidth: 1450}}>{text}</div>
+        <Words text={text} delay={8} perWord={perWord} style={{color: C.white, fontSize: 76, fontWeight: 800, lineHeight: 1.15, marginTop: 22, maxWidth: 1450}} />
       </div>
     </Stage>
   );

@@ -6,7 +6,14 @@ export const Scene = ({dur, bare, children}) => {
   const frame = useCurrentFrame();
   const fadeIn = bare ? 1 : interpolate(frame, [0, 8], [0, 1], {extrapolateRight: 'clamp'});
   const fadeOut = interpolate(frame, [dur - 8, dur], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  return <AbsoluteFill style={{opacity: Math.min(fadeIn, dur > 16 ? fadeOut : 1)}}>{children}</AbsoluteFill>;
+  // Slow push-in so a graphic never sits perfectly still.
+  const push = bare ? 1 : interpolate(frame, [0, Math.max(1, dur)], [1, 1.04], {extrapolateRight: 'clamp'});
+  const drift = bare ? 0 : interpolate(frame, [0, Math.max(1, dur)], [0, -10], {extrapolateRight: 'clamp'});
+  return (
+    <AbsoluteFill style={{opacity: Math.min(fadeIn, dur > 16 ? fadeOut : 1), transform: `scale(${push}) translateY(${drift}px)`, transformOrigin: '50% 45%'}}>
+      {children}
+    </AbsoluteFill>
+  );
 };
 
 // Shared entrance helper: 0 to 1 over `len` frames after `delay`, eased.

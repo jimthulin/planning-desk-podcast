@@ -24,7 +24,13 @@ export const Bars = ({kicker, title, items = [], decimals = 0, baseline, source}
               <div style={{width: 400, flexShrink: 0, color: it.highlight ? C.white : C.muted, fontSize: 32, fontWeight: it.highlight ? 700 : 500, textAlign: 'right'}}>{it.label}</div>
               <div style={{position: 'relative', width: trackW, flexShrink: 0, height: 64}}>
                 <div style={{position: 'absolute', inset: 0, background: 'rgba(138,152,170,0.10)', borderRadius: 12}} />
-                <div style={{position: 'absolute', left: 0, top: 0, bottom: 0, width: w, borderRadius: 12, background: it.highlight ? C.amber : C.teal}} />
+                <div style={{position: 'absolute', left: 0, top: 0, bottom: 0, width: w, borderRadius: 12, overflow: 'hidden', background: it.highlight ? C.amber : C.teal}}>
+                  {x >= 1 && (
+                    <div style={{position: 'absolute', top: 0, bottom: 0, width: 160,
+                      left: `${((((frame - start) % 75) / 75) * 140) - 20}%`,
+                      background: 'linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.35), rgba(255,255,255,0))'}} />
+                  )}
+                </div>
                 {baseline !== undefined && (
                   <div style={{position: 'absolute', left: scale(baseline), top: -10, bottom: -10, width: 3, background: C.white, opacity: 0.6}} />
                 )}
