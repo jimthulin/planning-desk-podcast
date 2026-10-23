@@ -130,7 +130,8 @@ def build_episode(script_path: Path, fake: bool) -> Path:
             sequence.append(gap)
             t += mix["gap_between_segments_sec"] if line["first_in_segment"] else mix["gap_between_lines_sec"]
         wav = work / f"line_{i:03d}.wav"
-        to_wav(clip, wav)
+        tempo = float(mix.get("speech_tempo", 1.0))
+        to_wav(clip, wav, f"atempo={tempo}" if abs(tempo - 1.0) > 0.001 else None)
         d = duration(wav)
         timeline.append({"start_sec": round(t, 2), "duration_sec": round(d, 2), "segment": line["segment"],
                          "speaker": cfg["voices"][line["speaker"]]["name"], "text": line["text"]})

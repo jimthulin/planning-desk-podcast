@@ -66,16 +66,18 @@ jobs:
           echo "stem=$STEM" >> "$GITHUB_OUTPUT"
           echo "Rendering $S"
 
-      - name: Make intro and outro music if missing
+      - name: Make intro and outro music if missing or the prompts changed
         run: |
-          FLAG=""; [ "$INPUT_FAKE" = "true" ] && FLAG="--fake"
-          if [ ! -f assets/intro.mp3 ] || [ ! -f assets/outro.mp3 ]; then
-            python make_jingles.py $FLAG
-            if [ "$INPUT_FAKE" != "true" ]; then
+          if [ "$INPUT_FAKE" = "true" ]; then
+            if [ ! -f assets/intro.mp3 ] || [ ! -f assets/outro.mp3 ]; then python make_jingles.py --fake; fi
+          else
+            python make_jingles.py
+            if [ -n "$(git status --porcelain assets)" ]; then
               git config user.name "planning-desk-bot"
               git config user.email "planning-desk-bot@users.noreply.github.com"
-              git add assets/intro.mp3 assets/outro.mp3
-              git commit -m "Add intro and outro music" && git push || true
+              git add assets
+              git commit -m "Update intro and outro music"
+              git pull --rebase -q && git push || true
             fi
           fi
 

@@ -33,5 +33,5 @@ jobs:
         run: |
           git config user.name "planning-desk-bot"
           git config user.email "planning-desk-bot@users.noreply.github.com"
-          git add assets/intro.mp3 assets/outro.mp3
+          git add assets
           git commit -m "Update intro and outro music" && git push || echo "Nothing changed"
