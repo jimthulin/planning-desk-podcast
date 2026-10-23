@@ -62,3 +62,18 @@ Show title, description, AI disclosure, categories, owner email and the Apple/Sp
 under `podcast` in `config.json`; after changing them, run `python publish.py --rebuild` and push.
 GitHub Pages sites are limited to about 1 GB, roughly 60 episodes at 15 MB each, so after a year
 or so move older MP3s out or switch to a podcast host and redirect the feed.
+
+## Video (YouTube)
+
+Each render also produces a 1080p video with motion graphics, made with Remotion in `video/`:
+the episode audio, host name tags with live voice meters, and animated cards driven by
+`episodes/visuals/visuals-YYYY-MM-DD.json`, which the script writer creates next to the script.
+Templates: headline, stat, bars, route map, list, takeaway, quick hit, plus the title and outro cards.
+The MP4 is attached to the episode's GitHub release and, once the YouTube secrets exist, uploaded to
+YouTube with chapters, captions, a thumbnail and the synthetic-content flag (`youtube_upload.py`).
+
+Preview locally: `cd video && npm ci && node render.mjs --stem 2026-10-23-test --stills 16,70,140`
+(needs the episode MP3 and JSON in build/out). Add `--from 0 --to 60` instead of `--stills` for a clip.
+
+YouTube secrets: `YOUTUBE_CLIENT_ID`, `YOUTUBE_CLIENT_SECRET`, `YOUTUBE_REFRESH_TOKEN`.
+Privacy, category and tags live under `youtube` in `config.json`.

@@ -14,6 +14,10 @@ on:
         description: "Dry run with placeholder tones (no ElevenLabs credits)"
         type: boolean
         default: false
+      video:
+        description: "Also render the video"
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -25,13 +29,16 @@ concurrency:
 jobs:
   render:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 120
     env:
       ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
       INPUT_SCRIPT: ${{ inputs.script }}
       INPUT_FAKE: ${{ inputs.fake }}
       BEFORE_SHA: ${{ github.event.before }}
       GH_TOKEN: ${{ github.token }}
+      YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+      YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+      YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -118,3 +125,32 @@ jobs:
           git commit -m "Publish episode $STEM"
           git pull --rebase -q
           git push
+
+      # ---- Video (YouTube) ------------------------------------------------
+      - name: Set up Node for the video
+        if: ${{ inputs.fake != true && inputs.video != false }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: video/package-lock.json
+
+      - name: Render the video
+        if: ${{ inputs.fake != true && inputs.video != false }}
+        timeout-minutes: 75
+        run: |
+          STEM="${{ steps.pick.outputs.stem }}"
+          cd video
+          npm ci --no-audit --no-fund
+          npx remotion browser ensure
+          node render.mjs --stem "$STEM" --concurrency 4
+          node render.mjs --stem "$STEM" --stills 8
+          cd ..
+          gh release upload "episode-$STEM" "build/out/planning-desk-$STEM.mp4" --clobber
+
+      - name: Upload to YouTube
+        if: ${{ inputs.fake != true && inputs.video != false && !endsWith(steps.pick.outputs.stem, '-test') && env.YOUTUBE_REFRESH_TOKEN != '' }}
+        run: |
+          pip install -q google-api-python-client google-auth
+          python youtube_upload.py "${{ steps.pick.outputs.stem }}"
+          gh release upload "episode-${{ steps.pick.outputs.stem }}" "build/out/planning-desk-${{ steps.pick.outputs.stem }}.youtube.txt" --clobber
