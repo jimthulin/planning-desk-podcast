@@ -7,17 +7,32 @@
     "ai_disclosure": "The Planning Desk is produced with AI. AI agents gather and summarise the week's news from public sources, and the hosts' voices are synthetic.",
     "author": "The Planning Desk",
     "owner_name": "Jim Thulin",
-    "owner_email": "",
+    "owner_email": "theplanningdesk.podcast@gmail.com",
     "copyright": "Copyright 2026 The Planning Desk",
     "language": "en",
-    "category": {"main": "News", "sub": "Business News", "secondary": {"main": "Business", "sub": "Management"}},
+    "category": {
+      "main": "News",
+      "sub": "Business News",
+      "secondary": {
+        "main": "Business",
+        "sub": "Management"
+      }
+    },
     "base_url": "https://jimthulin.github.io/planning-desk-podcast/",
     "apple_url": "",
     "spotify_url": ""
   },
   "voices": {
-    "F": {"name": "Anna", "voice_id": "99Hm6N8psCBzc1JwEVR2", "elevenlabs_voice": "Riley - Charismatic News Anchor/Host"},
-    "M": {"name": "Erik", "voice_id": "tNIuvXGG5RnGdTbvfnPR", "elevenlabs_voice": "Robert - American standard broadcaster"}
+    "F": {
+      "name": "Anna",
+      "voice_id": "99Hm6N8psCBzc1JwEVR2",
+      "elevenlabs_voice": "Riley - Charismatic News Anchor/Host"
+    },
+    "M": {
+      "name": "Erik",
+      "voice_id": "tNIuvXGG5RnGdTbvfnPR",
+      "elevenlabs_voice": "Robert - American standard broadcaster"
+    }
   },
   "tts": {
     "model_id": "eleven_v4",
@@ -32,10 +47,10 @@
     "duration_sec": 10
   },
   "mix": {
-    "gap_between_lines_sec": 0.30,
+    "gap_between_lines_sec": 0.3,
     "gap_between_segments_sec": 0.75,
     "gap_after_intro_sec": 0.25,
-    "gap_before_outro_sec": 0.60,
+    "gap_before_outro_sec": 0.6,
     "intro_fade_out_sec": 1.5,
     "outro_fade_in_sec": 0.3,
     "outro_fade_out_sec": 1.2,
