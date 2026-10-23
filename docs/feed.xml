@@ -6,8 +6,8 @@
     <atom:link href="https://jimthulin.github.io/planning-desk-podcast/feed.xml" rel="self" type="application/rss+xml"/>
     <language>en</language>
     <copyright>Copyright 2026 The Planning Desk</copyright>
-    <description><![CDATA[Fifteen minutes of supply chain planning and design news every Sunday, with a focus on the Nordics and the DACH region: disruptions, trade and macro signals, planning technology and AI, real company use cases and the events worth your time. The Planning Desk is produced with AI. AI agents gather and summarise the week's news from public sources, and the hosts' voices are synthetic.]]></description>
-    <itunes:summary><![CDATA[Fifteen minutes of supply chain planning and design news every Sunday, with a focus on the Nordics and the DACH region: disruptions, trade and macro signals, planning technology and AI, real company use cases and the events worth your time. The Planning Desk is produced with AI. AI agents gather and summarise the week's news from public sources, and the hosts' voices are synthetic.]]></itunes:summary>
+    <description><![CDATA[Fifteen minutes of supply chain planning and design news every Sunday, with a focus on the Nordics and the DACH region: disruptions, trade and macro signals, planning technology and AI, real company use cases and the events worth your time. Made in partnership with Optilon. The Planning Desk is produced with AI. AI agents gather and summarise the week's news from public sources, and the hosts' voices are synthetic.]]></description>
+    <itunes:summary><![CDATA[Fifteen minutes of supply chain planning and design news every Sunday, with a focus on the Nordics and the DACH region: disruptions, trade and macro signals, planning technology and AI, real company use cases and the events worth your time. Made in partnership with Optilon. The Planning Desk is produced with AI. AI agents gather and summarise the week's news from public sources, and the hosts' voices are synthetic.]]></itunes:summary>
     <itunes:author>The Planning Desk</itunes:author>
     <itunes:owner>
       <itunes:name>The Planning Desk</itunes:name>
@@ -25,7 +25,7 @@
     <itunes:category text="Business"><itunes:category text="Management"/></itunes:category>
     <itunes:explicit>false</itunes:explicit>
     <itunes:type>episodic</itunes:type>
-    <lastBuildDate>Fri, 23 Oct 2026 21:18:38 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 23 Oct 2026 21:51:19 +0200</lastBuildDate>
     <generator>planning-desk-podcast</generator>
 
   </channel>
