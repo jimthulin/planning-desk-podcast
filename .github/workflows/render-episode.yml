@@ -3,7 +3,7 @@ name: Render episode
 on:
   push:
     branches: [main]
-    paths: ["episodes/scripts/*.json"]
+    paths: ["episodes/scripts/script-*.json"]
   workflow_dispatch:
     inputs:
       script:
@@ -102,3 +102,16 @@ jobs:
           else
             gh release create "$TAG" $FILES --title "$TITLE" --notes "Rendered from ${{ steps.pick.outputs.script }}"
           fi
+
+      - name: Publish to the podcast feed
+        # Test scripts (file names ending in -test) are rendered but never published.
+        if: ${{ inputs.fake != true && !endsWith(steps.pick.outputs.stem, '-test') }}
+        run: |
+          STEM="${{ steps.pick.outputs.stem }}"
+          python publish.py "$STEM"
+          git config user.name "planning-desk-bot"
+          git config user.email "planning-desk-bot@users.noreply.github.com"
+          git add docs
+          git commit -m "Publish episode $STEM"
+          git pull --rebase -q
+          git push

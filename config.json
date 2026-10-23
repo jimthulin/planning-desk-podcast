@@ -1,6 +1,20 @@
 {
   "show": "The Planning Desk",
   "artist": "The Planning Desk",
+  "podcast": {
+    "title": "The Planning Desk",
+    "description": "Fifteen minutes of supply chain planning and design news every Sunday, with a focus on the Nordics and the DACH region: disruptions, trade and macro signals, planning technology and AI, real company use cases and the events worth your time.",
+    "ai_disclosure": "The Planning Desk is produced with AI. AI agents gather and summarise the week's news from public sources, and the hosts' voices are synthetic.",
+    "author": "The Planning Desk",
+    "owner_name": "Jim Thulin",
+    "owner_email": "",
+    "copyright": "Copyright 2026 The Planning Desk",
+    "language": "en",
+    "category": {"main": "News", "sub": "Business News", "secondary": {"main": "Business", "sub": "Management"}},
+    "base_url": "https://jimthulin.github.io/planning-desk-podcast/",
+    "apple_url": "",
+    "spotify_url": ""
+  },
   "voices": {
     "F": {"name": "Anna", "voice_id": "99Hm6N8psCBzc1JwEVR2", "elevenlabs_voice": "Riley - Charismatic News Anchor/Host"},
     "M": {"name": "Erik", "voice_id": "tNIuvXGG5RnGdTbvfnPR", "elevenlabs_voice": "Robert - American standard broadcaster"}

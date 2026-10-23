@@ -46,3 +46,19 @@ python make_jingles.py
 python render.py episodes/scripts/script-2026-10-23-test.json
 python render.py episodes/scripts/script-2026-10-23-test.json --fake   # no key, no credits
 ```
+
+## Public podcast feed
+
+Every non-test episode is also published to `docs/`, which GitHub Pages serves at
+https://jimthulin.github.io/planning-desk-podcast/ :
+
+- `feed.xml`: the RSS feed to submit to Apple Podcasts and Spotify
+- `index.html`: a simple episode page with players and show notes
+- `cover.png`: 3000x3000 show artwork (redraw with `python tools/make_cover.py`)
+- `episodes/`: the MP3s, and `episodes.json`, the list the feed is built from
+
+Scripts whose file name ends in `-test` are rendered and released but never published.
+Show title, description, AI disclosure, categories, owner email and the Apple/Spotify links live
+under `podcast` in `config.json`; after changing them, run `python publish.py --rebuild` and push.
+GitHub Pages sites are limited to about 1 GB, roughly 60 episodes at 15 MB each, so after a year
+or so move older MP3s out or switch to a podcast host and redirect the feed.
