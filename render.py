@@ -19,7 +19,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 from podcast_lib import (ROOT, ElevenLabsError, cache_key, duration, load_config, post_audio,
-                         run, silence, to_wav, tone)
+                         run, silence, tighten, to_wav, tone)
 
 BUILD = ROOT / "build"
 CACHE = BUILD / "cache"
@@ -132,6 +132,10 @@ def build_episode(script_path: Path, fake: bool) -> Path:
         wav = work / f"line_{i:03d}.wav"
         tempo = float(mix.get("speech_tempo", 1.0))
         to_wav(clip, wav, f"atempo={tempo}" if abs(tempo - 1.0) > 0.001 else None)
+        if mix.get("max_pause_sec"):
+            raw = wav.with_suffix(".raw.wav")
+            wav.rename(raw)
+            tighten(raw, wav, max_pause=float(mix["max_pause_sec"]), edge=float(mix.get("line_edge_sec", 0.04)))
         d = duration(wav)
         timeline.append({"start_sec": round(t, 2), "duration_sec": round(d, 2), "segment": line["segment"],
                          "speaker": cfg["voices"][line["speaker"]]["name"], "text": line["text"]})
