@@ -14,6 +14,7 @@ import {ListCard} from './templates/ListCard.jsx';
 import {RouteMap} from './templates/RouteMap.jsx';
 import {Timeline} from './templates/Timeline.jsx';
 import {Flow} from './templates/Flow.jsx';
+import {Voice} from './templates/Voice.jsx';
 
 const TEMPLATES = {
   headline: Headline,
@@ -25,6 +26,7 @@ const TEMPLATES = {
   route: RouteMap,
   timeline: Timeline,
   flow: Flow,
+  voice: Voice,
 };
 
 const ITEM_TEMPLATES = new Set(['list', 'timeline', 'flow']);

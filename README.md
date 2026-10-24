@@ -68,7 +68,7 @@ or so move older MP3s out or switch to a podcast host and redirect the feed.
 Each render also produces a 1080p video with motion graphics, made with Remotion in `video/`:
 the episode audio, live captions, and animated cards driven by
 `episodes/visuals/visuals-YYYY-MM-DD.json`, which the script writer creates next to the script.
-Templates: headline, stat, bars, route map, list, timeline, flow, takeaway, quick hit, plus the title and outro cards.
+Templates: headline, stat, bars, route map, list, timeline, flow, takeaway, quick hit, expert voice, plus the title and outro cards.
 The MP4 is attached to the episode's GitHub release and, once the YouTube secrets exist, uploaded to
 YouTube with chapters, captions, a thumbnail and the synthetic-content flag (`youtube_upload.py`).
 
