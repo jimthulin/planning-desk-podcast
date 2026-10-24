@@ -50,7 +50,7 @@ python render.py episodes/scripts/script-2026-10-23-test.json --fake   # no key,
 ## Public podcast feed
 
 Every non-test episode is also published to `docs/`, which GitHub Pages serves at
-https://jimthulin.github.io/planning-desk-podcast/ :
+https://theplanningdesk.github.io/podcast/ :
 
 - `feed.xml`: the RSS feed to submit to Apple Podcasts and Spotify
 - `index.html`: a simple episode page with players and show notes

@@ -22,7 +22,7 @@ import urllib.request
 from podcast_lib import ROOT, load_config
 
 API = "https://graph.instagram.com/v26.0"
-REPO = os.environ.get("GITHUB_REPOSITORY", "jimthulin/planning-desk-podcast")
+REPO = os.environ.get("GITHUB_REPOSITORY", "theplanningdesk/podcast")
 
 
 def call(method: str, url: str, data: dict | None = None, token: str | None = None) -> dict:
