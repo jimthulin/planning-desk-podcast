@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
-"""Share the Sunday episode on the owner's own LinkedIn profile ("Share on LinkedIn", w_member_social).
+"""Prepare the Sunday post for The Planning Desk's LinkedIn Page, and post it there when Page access exists.
 
-Posts the script's linkedin.profile_post text with a link card to the YouTube video (or the
-episode page when there's no video). Self-serve LinkedIn tokens last 60 days and can't be
-refreshed by the app, so the run warns when LINKEDIN_TOKEN_SET_ON (a repository variable,
-YYYY-MM-DD) is more than 50 days old.
+The show never posts on a personal profile. Every Sunday this writes the script's
+linkedin.page_post text, with the YouTube link (or the episode page) on the last line, to
+build/out/planning-desk-<stem>-linkedin.txt, which the workflow attaches to the release so the
+script writer can hand it over for posting by hand.
 
-Needs the LINKEDIN_TOKEN secret (scopes: openid, profile, w_member_social).
+Automatic posting needs LinkedIn's Community Management API, which LinkedIn grants only after
+reviewing the app. Once approved, set:
+  LINKEDIN_PAGE_TOKEN   secret, a token from a Page admin with the w_organization_social scope
+  LINKEDIN_ORG_ID       repository variable, the Page's numeric organization id
+  LINKEDIN_TOKEN_SET_ON repository variable, YYYY-MM-DD the token was made (warns after 50 days)
+Without them the script only writes the text file.
+
 Usage: python linkedin_post.py 2026-11-08
 """
 from __future__ import annotations
@@ -36,8 +42,11 @@ def call(method: str, url: str, token: str, data: dict | None = None) -> tuple[d
     except urllib.error.HTTPError as err:
         msg = err.read().decode(errors="replace")[:600]
         if err.code == 401:
-            raise SystemExit("LinkedIn token expired or revoked. Make a new one with LinkedIn's token generator "
-                             "and update the LINKEDIN_TOKEN secret and the LINKEDIN_TOKEN_SET_ON variable.") from err
+            raise SystemExit("LinkedIn Page token expired or revoked. Make a new one and update the "
+                             "LINKEDIN_PAGE_TOKEN secret and the LINKEDIN_TOKEN_SET_ON variable.") from err
+        if err.code == 403:
+            raise SystemExit("LinkedIn refused the Page post (403). The token needs w_organization_social, "
+                             "its owner must be a Page admin, and the app needs Community Management access.") from err
         raise SystemExit(f"LinkedIn API {err.code}: {msg}") from err
 
 
@@ -46,26 +55,31 @@ def main() -> int:
         raise SystemExit(__doc__)
     stem = sys.argv[1]
     cfg = load_config()
-    token = os.environ["LINKEDIN_TOKEN"]
-    set_on = os.environ.get("LINKEDIN_TOKEN_SET_ON", "")
-    if set_on:
-        age = (date.today() - date.fromisoformat(set_on)).days
-        if age > 50:
-            print(f"::warning::The LinkedIn token is {age} days old and stops working at 60. Renew it soon.")
+    pod = cfg["podcast"]
 
     script = json.loads((ROOT / "episodes" / "scripts" / f"script-{stem}.json").read_text(encoding="utf-8"))
-    text = ((script.get("linkedin") or {}).get("profile_post") or "").strip()
+    text = ((script.get("linkedin") or {}).get("page_post") or "").strip()
     if not text:
-        print("No linkedin.profile_post in the script; nothing to share.")
+        print("No linkedin.page_post in the script; nothing to post.")
         return 0
     yt = OUT / f"planning-desk-{stem}.youtube.txt"
-    pod = cfg["podcast"]
     url = yt.read_text().strip() if yt.exists() else f"{pod['base_url'].rstrip('/')}/e/{stem}.html"
-    meta = json.loads((OUT / f"planning-desk-{stem}.json").read_text(encoding="utf-8"))
+    (OUT / f"planning-desk-{stem}-linkedin.txt").write_text(f"{text}\n\n{url}\n", encoding="utf-8")
+    print(f"Page post text written for {stem}.")
 
-    me, _ = call("GET", "https://api.linkedin.com/v2/userinfo", token)
+    token, org = os.environ.get("LINKEDIN_PAGE_TOKEN", ""), os.environ.get("LINKEDIN_ORG_ID", "").strip()
+    if not (token and org):
+        print("No Page access configured (LINKEDIN_PAGE_TOKEN and LINKEDIN_ORG_ID); post it by hand.")
+        return 0
+    set_on = os.environ.get("LINKEDIN_TOKEN_SET_ON", "")
+    if set_on:
+        age = (date.today() - date.fromisoformat(set_on.strip())).days
+        if age > 50:
+            print(f"::warning::The LinkedIn Page token is {age} days old and stops working at 60. Renew it soon.")
+
+    meta = json.loads((OUT / f"planning-desk-{stem}.json").read_text(encoding="utf-8"))
     body = {
-        "author": f"urn:li:person:{me['sub']}",
+        "author": f"urn:li:organization:{org}",
         "lifecycleState": "PUBLISHED",
         "specificContent": {"com.linkedin.ugc.ShareContent": {
             "shareCommentary": {"text": text[:2900]},
@@ -77,7 +91,7 @@ def main() -> int:
     _, headers = call("POST", "https://api.linkedin.com/v2/ugcPosts", token, body)
     post_id = headers.get("X-RestLi-Id") or headers.get("x-restli-id", "")
     link = f"https://www.linkedin.com/feed/update/{post_id}/" if post_id else "posted"
-    print(f"Shared on LinkedIn: {link}")
+    print(f"Posted on the LinkedIn Page: {link}")
     (OUT / f"planning-desk-{stem}.linkedin.txt").write_text(link + "\n", encoding="utf-8")
     return 0
 

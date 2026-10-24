@@ -46,7 +46,8 @@ jobs:
       INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
       INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
       GH_ADMIN_TOKEN: ${{ secrets.GH_ADMIN_TOKEN }}
-      LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
+      LINKEDIN_PAGE_TOKEN: ${{ secrets.LINKEDIN_PAGE_TOKEN }}
+      LINKEDIN_ORG_ID: ${{ vars.LINKEDIN_ORG_ID }}
       LINKEDIN_TOKEN_SET_ON: ${{ vars.LINKEDIN_TOKEN_SET_ON }}
       BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
     steps:
@@ -178,10 +179,18 @@ jobs:
           python youtube_upload.py "${{ steps.pick.outputs.stem }}"
           gh release upload "episode-${{ steps.pick.outputs.stem }}" "build/out/planning-desk-${{ steps.pick.outputs.stem }}.youtube.txt" --clobber
 
-      - name: Share on LinkedIn (owner's profile)
-        if: ${{ inputs.fake != true && steps.pick.outputs.format == 'weekly' && steps.pick.outputs.test != 'true' && env.LINKEDIN_TOKEN != '' }}
+      # Sunday: the show's LinkedIn Page post. Always attached to the release as text; posted
+      # automatically only once the Page has API access (LINKEDIN_PAGE_TOKEN + LINKEDIN_ORG_ID).
+      - name: LinkedIn Page post
+        if: ${{ inputs.fake != true && steps.pick.outputs.format == 'weekly' && steps.pick.outputs.test != 'true' }}
         continue-on-error: true
-        run: python linkedin_post.py "${{ steps.pick.outputs.stem }}"
+        run: |
+          STEM="${{ steps.pick.outputs.stem }}"
+          python linkedin_post.py "$STEM"
+          for f in "build/out/planning-desk-$STEM-linkedin.txt" "build/out/planning-desk-$STEM.linkedin.txt"; do
+            [ -f "$f" ] && gh release upload "episode-$STEM" "$f" --clobber
+          done
+          true
 
       - name: Send the newsletter
         if: ${{ inputs.fake != true && steps.pick.outputs.format == 'weekly' && steps.pick.outputs.test != 'true' && env.BUTTONDOWN_API_KEY != '' }}
