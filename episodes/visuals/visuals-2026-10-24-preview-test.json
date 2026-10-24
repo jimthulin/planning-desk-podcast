@@ -1,0 +1,1049 @@
+{
+ "cues": [
+  {
+   "line": 0,
+   "kicker": "Rhine, Germany",
+   "headline": "Barges to Kaub carry a tenth of a normal load",
+   "kpis": [
+    {
+     "value": 280,
+     "label": "tonnes per barge to Kaub",
+     "suffix": " t"
+    }
+   ],
+   "visual": {
+    "template": "columns",
+    "props": {
+     "title": "Tonnes per barge, Rotterdam to Kaub",
+     "target": 2500,
+     "items": [
+      {
+       "label": "Standard load",
+       "value": 2500
+      },
+      {
+       "label": "Now",
+       "value": 280,
+       "highlight": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "line": 1,
+   "kicker": "At sea",
+   "headline": "Ships drift back to Suez. The Gulf stays nearly shut.",
+   "visual": {
+    "template": "route",
+    "props": {
+     "routes": [
+      {
+       "style": "faded",
+       "label": "Cape of Good Hope",
+       "points": [
+        [
+         121.47,
+         31.23
+        ],
+        [
+         122.3,
+         26.0
+        ],
+        [
+         117.0,
+         20.0
+        ],
+        [
+         110.5,
+         10.0
+        ],
+        [
+         104.5,
+         2.0
+        ],
+        [
+         103.85,
+         1.29
+        ],
+        [
+         100.0,
+         3.5
+        ],
+        [
+         96.0,
+         6.0
+        ],
+        [
+         86.0,
+         5.6
+        ],
+        [
+         80.6,
+         5.7
+        ],
+        [
+         70.0,
+         -2.0
+        ],
+        [
+         52.0,
+         -20.0
+        ],
+        [
+         40.0,
+         -33.0
+        ],
+        [
+         26.0,
+         -35.5
+        ],
+        [
+         18.47,
+         -34.36
+        ],
+        [
+         12.0,
+         -25.0
+        ],
+        [
+         5.0,
+         -5.0
+        ],
+        [
+         -13.0,
+         9.0
+        ],
+        [
+         -18.5,
+         15.0
+        ],
+        [
+         -16.5,
+         28.5
+        ],
+        [
+         -10.5,
+         36.0
+        ],
+        [
+         -9.8,
+         43.0
+        ],
+        [
+         -5.5,
+         48.3
+        ],
+        [
+         1.5,
+         50.6
+        ],
+        [
+         4.48,
+         51.92
+        ]
+       ]
+      },
+      {
+       "style": "primary",
+       "label": "Suez",
+       "points": [
+        [
+         121.47,
+         31.23
+        ],
+        [
+         122.3,
+         26.0
+        ],
+        [
+         117.0,
+         20.0
+        ],
+        [
+         110.5,
+         10.0
+        ],
+        [
+         104.5,
+         2.0
+        ],
+        [
+         103.85,
+         1.29
+        ],
+        [
+         100.0,
+         3.5
+        ],
+        [
+         96.0,
+         6.0
+        ],
+        [
+         86.0,
+         5.6
+        ],
+        [
+         80.6,
+         5.7
+        ],
+        [
+         70.0,
+         9.0
+        ],
+        [
+         55.0,
+         12.8
+        ],
+        [
+         48.0,
+         12.3
+        ],
+        [
+         43.3,
+         12.6
+        ],
+        [
+         38.5,
+         19.5
+        ],
+        [
+         34.0,
+         27.0
+        ],
+        [
+         32.55,
+         30.0
+        ],
+        [
+         32.3,
+         31.4
+        ],
+        [
+         26.0,
+         33.5
+        ],
+        [
+         15.0,
+         37.0
+        ],
+        [
+         10.5,
+         37.8
+        ],
+        [
+         3.0,
+         37.5
+        ],
+        [
+         -5.6,
+         35.95
+        ],
+        [
+         -9.8,
+         37.5
+        ],
+        [
+         -9.8,
+         43.0
+        ],
+        [
+         -5.5,
+         48.3
+        ],
+        [
+         1.5,
+         50.6
+        ],
+        [
+         4.48,
+         51.92
+        ]
+       ]
+      }
+     ],
+     "points": [
+      {
+       "name": "Shanghai",
+       "lat": 31.23,
+       "lon": 121.47
+      },
+      {
+       "name": "Suez",
+       "lat": 30.0,
+       "lon": 32.55
+      },
+      {
+       "name": "Cape of Good Hope",
+       "lat": -34.36,
+       "lon": 18.47,
+       "muted": true
+      },
+      {
+       "name": "Rotterdam",
+       "lat": 51.92,
+       "lon": 4.48
+      }
+     ]
+    }
+   }
+  },
+  {
+   "line": 2,
+   "kicker": "The Planning Desk",
+   "headline": "Fifteen minutes on supply chain planning and design",
+   "sub": "From the Nordics, DACH and beyond. With Anna and Erik."
+  },
+  {
+   "line": 4,
+   "kicker": "This week",
+   "headline": "Three headlines, and three more",
+   "visual": {
+    "template": "list",
+    "props": {
+     "items": [
+      {
+       "label": "Rhine",
+       "detail": "Drought pushes the river to record lows",
+       "say": "Drought pushes"
+      },
+      {
+       "label": "Suez",
+       "detail": "Carriers head back as Hormuz gets worse",
+       "say": "Carriers head back"
+      },
+      {
+       "label": "Cisco",
+       "detail": "A planning agent with a planner's week",
+       "say": "Cisco shows"
+      },
+      {
+       "label": "DSV",
+       "detail": "A merger hangover",
+       "say": "merger hangover"
+      },
+      {
+       "label": "Sweden",
+       "detail": "A slow warehouse ramp",
+       "say": "slow warehouse ramp"
+      },
+      {
+       "label": "EU and China",
+       "detail": "New trade curbs",
+       "say": "trade curbs"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "line": 6,
+   "kicker": "Rhine",
+   "headline": "Drought pushes the Rhine to record lows",
+   "sub": "Barges from Rotterdam to Kaub carry barely a tenth of a standard load.",
+   "kpis": [
+    {
+     "value": 280,
+     "label": "tonnes per barge to Kaub",
+     "suffix": " t"
+    },
+    {
+     "value": 2500,
+     "label": "tonnes in a standard load"
+    }
+   ],
+   "visual": {
+    "template": "columns",
+    "props": {
+     "title": "Tonnes per barge, Rotterdam to Kaub",
+     "target": 2500,
+     "items": [
+      {
+       "label": "Standard load",
+       "value": 2500
+      },
+      {
+       "label": "Now",
+       "value": 280,
+       "highlight": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "line": 8,
+   "kicker": "Rhine",
+   "headline": "Rail can't take the overflow",
+   "sub": "The right-bank line from Troisdorf to Wiesbaden is under works until 12 December.",
+   "visual": {
+    "template": "route",
+    "props": {
+     "pad": 1.2,
+     "routes": [
+      {
+       "style": "primary",
+       "label": "Rhine barge route",
+       "points": [
+        [
+         4.48,
+         51.92
+        ],
+        [
+         5.9,
+         51.85
+        ],
+        [
+         6.77,
+         51.23
+        ],
+        [
+         6.96,
+         50.94
+        ],
+        [
+         7.6,
+         50.36
+        ],
+        [
+         7.76,
+         50.09
+        ],
+        [
+         8.27,
+         50.0
+        ],
+        [
+         8.45,
+         49.0
+        ],
+        [
+         7.8,
+         48.5
+        ],
+        [
+         7.59,
+         47.56
+        ]
+       ]
+      }
+     ],
+     "points": [
+      {
+       "name": "Rotterdam",
+       "lat": 51.92,
+       "lon": 4.48
+      },
+      {
+       "name": "Troisdorf",
+       "lat": 50.82,
+       "lon": 7.15,
+       "muted": true
+      },
+      {
+       "name": "Kaub",
+       "lat": 50.09,
+       "lon": 7.76,
+       "alert": true
+      },
+      {
+       "name": "Wiesbaden",
+       "lat": 50.08,
+       "lon": 8.24,
+       "muted": true
+      },
+      {
+       "name": "Basel",
+       "lat": 47.56,
+       "lon": 7.59
+      }
+     ]
+    }
+   },
+   "source": "VTG"
+  },
+  {
+   "line": 10,
+   "kicker": "Switzerland",
+   "headline": "The far end of the river feels it most",
+   "sub": "Diesel, heating oil, coal and cocoa deliveries restricted. Fuel reserves released. Barge rates at a record.",
+   "keep": true
+  },
+  {
+   "line": 11,
+   "kicker": "For planners",
+   "headline": "Low water is a season now, not a surprise",
+   "sub": "Line up rail and road fallback. Move stock forward before the levels drop.",
+   "keep": true
+  },
+  {
+   "line": 12,
+   "kicker": "Suez and Hormuz",
+   "headline": "Carriers are returning to Suez",
+   "sub": "Freightos expects a full recovery in the first quarter of next year.",
+   "visual": {
+    "template": "route",
+    "props": {
+     "routes": [
+      {
+       "style": "faded",
+       "label": "Cape of Good Hope",
+       "points": [
+        [
+         121.47,
+         31.23
+        ],
+        [
+         122.3,
+         26.0
+        ],
+        [
+         117.0,
+         20.0
+        ],
+        [
+         110.5,
+         10.0
+        ],
+        [
+         104.5,
+         2.0
+        ],
+        [
+         103.85,
+         1.29
+        ],
+        [
+         100.0,
+         3.5
+        ],
+        [
+         96.0,
+         6.0
+        ],
+        [
+         86.0,
+         5.6
+        ],
+        [
+         80.6,
+         5.7
+        ],
+        [
+         70.0,
+         -2.0
+        ],
+        [
+         52.0,
+         -20.0
+        ],
+        [
+         40.0,
+         -33.0
+        ],
+        [
+         26.0,
+         -35.5
+        ],
+        [
+         18.47,
+         -34.36
+        ],
+        [
+         12.0,
+         -25.0
+        ],
+        [
+         5.0,
+         -5.0
+        ],
+        [
+         -13.0,
+         9.0
+        ],
+        [
+         -18.5,
+         15.0
+        ],
+        [
+         -16.5,
+         28.5
+        ],
+        [
+         -10.5,
+         36.0
+        ],
+        [
+         -9.8,
+         43.0
+        ],
+        [
+         -5.5,
+         48.3
+        ],
+        [
+         1.5,
+         50.6
+        ],
+        [
+         4.48,
+         51.92
+        ]
+       ]
+      },
+      {
+       "style": "primary",
+       "label": "Suez",
+       "points": [
+        [
+         121.47,
+         31.23
+        ],
+        [
+         122.3,
+         26.0
+        ],
+        [
+         117.0,
+         20.0
+        ],
+        [
+         110.5,
+         10.0
+        ],
+        [
+         104.5,
+         2.0
+        ],
+        [
+         103.85,
+         1.29
+        ],
+        [
+         100.0,
+         3.5
+        ],
+        [
+         96.0,
+         6.0
+        ],
+        [
+         86.0,
+         5.6
+        ],
+        [
+         80.6,
+         5.7
+        ],
+        [
+         70.0,
+         9.0
+        ],
+        [
+         55.0,
+         12.8
+        ],
+        [
+         48.0,
+         12.3
+        ],
+        [
+         43.3,
+         12.6
+        ],
+        [
+         38.5,
+         19.5
+        ],
+        [
+         34.0,
+         27.0
+        ],
+        [
+         32.55,
+         30.0
+        ],
+        [
+         32.3,
+         31.4
+        ],
+        [
+         26.0,
+         33.5
+        ],
+        [
+         15.0,
+         37.0
+        ],
+        [
+         10.5,
+         37.8
+        ],
+        [
+         3.0,
+         37.5
+        ],
+        [
+         -5.6,
+         35.95
+        ],
+        [
+         -9.8,
+         37.5
+        ],
+        [
+         -9.8,
+         43.0
+        ],
+        [
+         -5.5,
+         48.3
+        ],
+        [
+         1.5,
+         50.6
+        ],
+        [
+         4.48,
+         51.92
+        ]
+       ]
+      }
+     ],
+     "points": [
+      {
+       "name": "Shanghai",
+       "lat": 31.23,
+       "lon": 121.47
+      },
+      {
+       "name": "Suez",
+       "lat": 30.0,
+       "lon": 32.55
+      },
+      {
+       "name": "Cape of Good Hope",
+       "lat": -34.36,
+       "lon": 18.47,
+       "muted": true
+      },
+      {
+       "name": "Rotterdam",
+       "lat": 51.92,
+       "lon": 4.48
+      }
+     ]
+    }
+   },
+   "source": "Freightos"
+  },
+  {
+   "line": 14,
+   "kicker": "Suez and Hormuz",
+   "headline": "Carriers are returning to Suez",
+   "sub": "More ships, shorter trips, and a risk of overcapacity next year. For now, rates rise.",
+   "keep": true,
+   "kpis": [
+    {
+     "value": 3400,
+     "label": "Asia to North Europe, per 40 ft",
+     "prefix": "$"
+    },
+    {
+     "value": 6,
+     "label": "rise in the rate",
+     "prefix": "+",
+     "suffix": "%",
+     "accent": true
+    }
+   ],
+   "source": "Freightos"
+  },
+  {
+   "line": 16,
+   "kicker": "Strait of Hormuz",
+   "headline": "The Gulf goes the other way",
+   "sub": "Iran has stepped up attacks. A projectile sank a container ship the week before.",
+   "kpis": [
+    {
+     "value": 2,
+     "label": "containerships into the Gulf, week 42",
+     "accent": true
+    }
+   ],
+   "visual": {
+    "template": "columns",
+    "props": {
+     "title": "Containerships entering the Gulf, per week",
+     "items": [
+      {
+       "label": "Week 41",
+       "value": 5
+      },
+      {
+       "label": "Week 42",
+       "value": 2,
+       "highlight": true
+      }
+     ]
+    }
+   },
+   "source": "Drewry"
+  },
+  {
+   "line": 18,
+   "kicker": "Strait of Hormuz",
+   "headline": "Two lanes moving in opposite directions",
+   "keep": true,
+   "kpis": [
+    {
+     "value": 2,
+     "label": "containerships into the Gulf, week 42",
+     "accent": true
+    },
+    {
+     "value": 55,
+     "label": "Suez transits, up from 54",
+     "accent": false
+    }
+   ],
+   "source": "Drewry"
+  },
+  {
+   "line": 19,
+   "kicker": "For planners",
+   "headline": "Plan for both",
+   "sub": "Build a lead-time and rate reset into your 2027 parameters. Treat the Gulf as a separate risk.",
+   "keep": true
+  },
+  {
+   "line": 20,
+   "visual": {
+    "template": "voice",
+    "props": {
+     "name": "Adrian Gonzalez",
+     "role": "Adelante SCM",
+     "where": "Talking Logistics blog",
+     "text": "Shippers should prepare for higher truck rates in 2027, as shrinking capacity hands pricing power back to carriers."
+    }
+   }
+  },
+  {
+   "line": 23,
+   "kicker": "For planners",
+   "headline": "Don't plan on cheap trucks in 2027",
+   "sub": "Give next year's transport budget room for higher rates."
+  },
+  {
+   "line": 24,
+   "kicker": "Cisco · ASCM CHAINge",
+   "headline": "Cisco puts a planning agent into production",
+   "sub": "Presented by Joe McMorrow, head of supply chain transformation.",
+   "kpis": [
+    {
+     "value": 42,
+     "label": "demand planners use it"
+    }
+   ],
+   "visual": {
+    "template": "flow",
+    "props": {
+     "steps": [
+      {
+       "label": "Forecast vs actual",
+       "detail": "The routine check, automated",
+       "say": "forecast versus actual"
+      },
+      {
+       "label": "Ask in a chat",
+       "detail": "Follow-up questions",
+       "say": "follow-up questions"
+      },
+      {
+       "label": "Time back",
+       "detail": "At least six hours a week",
+       "say": "six hours"
+      },
+      {
+       "label": "Insight and sales",
+       "detail": "Where the time goes",
+       "say": "planning insight"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "line": 26,
+   "keep": true,
+   "kpis": [
+    {
+     "value": 42,
+     "label": "demand planners use it"
+    },
+    {
+     "value": 6,
+     "label": "hours a week back per planner, at least",
+     "suffix": " h",
+     "accent": true
+    }
+   ]
+  },
+  {
+   "line": 28,
+   "kicker": "Cisco",
+   "headline": "No planner was cut",
+   "sub": "Headcount stays the same. The article gives no accuracy or financial figures.",
+   "keep": true
+  },
+  {
+   "line": 29,
+   "kicker": "For planners",
+   "headline": "Planner time moves from variance checks to judgement",
+   "sub": "It rests on business knowledge, data and human review behind the agent.",
+   "keep": true
+  },
+  {
+   "line": 30,
+   "visual": {
+    "template": "voice",
+    "props": {
+     "name": "Glenn Richey",
+     "role": "Auburn University",
+     "where": "Supply Chain Now podcast",
+     "verbatim": true,
+     "text": "AI magnifies the foundation that's underneath it, right? It doesn't fix bad visibility."
+    }
+   }
+  },
+  {
+   "line": 32,
+   "kicker": "ASCM and DSCI report",
+   "headline": "The people paradox in supply chain AI",
+   "kpis": [
+    {
+     "value": 83,
+     "label": "of leaders say workers can't yet use AI well",
+     "suffix": "%",
+     "accent": true
+    }
+   ],
+   "visual": {
+    "template": "columns",
+    "props": {
+     "title": "Share of supply chain leaders, %",
+     "suffix": "%",
+     "items": [
+      {
+       "label": "Can't use AI well yet",
+       "value": 83,
+       "highlight": true
+      },
+      {
+       "label": "AI to support people",
+       "value": 91
+      },
+      {
+       "label": "AI to replace people",
+       "value": 7
+      }
+     ]
+    }
+   }
+  },
+  {
+   "line": 36,
+   "kicker": "ASCM and DSCI report",
+   "headline": "Support people, not replace them",
+   "sub": "Small sample: about 140 responses, 107 analysed, mostly North American.",
+   "keep": true,
+   "kpis": [
+    {
+     "value": 91,
+     "label": "plan to use AI to support people",
+     "suffix": "%"
+    },
+    {
+     "value": 7,
+     "label": "expect it to replace them",
+     "suffix": "%",
+     "accent": false
+    }
+   ]
+  },
+  {
+   "line": 37,
+   "kicker": "For planners",
+   "headline": "The brake is change management, not the tools",
+   "keep": true
+  },
+  {
+   "line": 38,
+   "kicker": "McKinsey",
+   "headline": "Few firms see AI in the profit line yet",
+   "sub": "Sal Arora, co-lead of McKinsey's operations practice.",
+   "kpis": [
+    {
+     "value": 6,
+     "label": "credit AI with 5% or more of operating profit",
+     "prefix": "about",
+     "suffix": "%",
+     "accent": true
+    }
+   ],
+   "visual": {
+    "template": "columns",
+    "props": {
+     "title": "Leaders' impact multiple, MIT and McKinsey",
+     "decimals": 1,
+     "suffix": "x",
+     "items": [
+      {
+       "label": "2021",
+       "value": 2.7
+      },
+      {
+       "label": "2026",
+       "value": 4.7,
+       "highlight": true
+      }
+     ]
+    }
+   }
+  },
+  {
+   "line": 40,
+   "kicker": "McKinsey",
+   "headline": "The leaders pull away",
+   "sub": "With workflows redesigned end to end, supply chain agents cut cost of goods 4 to 7 percent.",
+   "keep": true,
+   "kpis": [
+    {
+     "value": 6,
+     "label": "credit AI with 5% or more of operating profit",
+     "prefix": "about",
+     "suffix": "%"
+    },
+    {
+     "value": 4.7,
+     "label": "leaders' impact multiple, up from 2.7",
+     "decimals": 1,
+     "suffix": "x",
+     "accent": true
+    }
+   ]
+  },
+  {
+   "line": 41,
+   "kicker": "For planners",
+   "headline": "Tie the AI business case to the P&L, not a count of use cases",
+   "keep": true
+  },
+  {
+   "line": 42,
+   "kicker": "That's the desk",
+   "headline": "Low rivers, busy straits, and an AI agent that gives planners their time back"
+  }
+ ]
+}

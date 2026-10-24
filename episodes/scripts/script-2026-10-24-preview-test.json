@@ -1,0 +1,277 @@
+{
+  "show": "The Planning Desk",
+  "episode_title": "Preview: The Rhine Runs Dry",
+  "week": "2026-W43",
+  "run_date": "2026-10-24",
+  "brief_file": "news-brief-2026-10-24-test.md",
+  "target_runtime_sec": 346,
+  "word_count": 991,
+  "hosts": {
+    "F": {
+      "name": "Anna",
+      "voice": "female, senior news anchor, calm, quick, warm"
+    },
+    "M": {
+      "name": "Erik",
+      "voice": "male, senior news anchor, calm, quick, dry"
+    }
+  },
+  "segments": [
+    {
+      "id": "intro_music",
+      "type": "music",
+      "duration_sec": 10
+    },
+    {
+      "id": "cold_open",
+      "type": "speech",
+      "items": [
+        "2026-W43-38",
+        "2026-W43-39"
+      ],
+      "lines": [
+        {
+          "speaker": "F",
+          "text": "The Rhine is so low that barges bound for Kaub carry about a tenth of a normal load. And the rail line that should take the overflow is under works until December."
+        },
+        {
+          "speaker": "M",
+          "text": "Out at sea, ships drift back to Suez while the Gulf stays nearly shut to box ships. This is The Planning Desk."
+        }
+      ]
+    },
+    {
+      "id": "welcome",
+      "type": "speech",
+      "items": [
+        "2026-W43-38",
+        "2026-W43-39",
+        "2026-W43-01",
+        "2026-W43-31",
+        "2026-W43-32",
+        "2026-W43-40"
+      ],
+      "lines": [
+        {
+          "speaker": "F",
+          "text": "Welcome to The Planning Desk, your fifteen minutes on supply chain planning and design, from the Nordics, DACH and beyond. I'm Anna."
+        },
+        {
+          "speaker": "M",
+          "text": "And I'm Erik."
+        },
+        {
+          "speaker": "F",
+          "text": "Quick note: this show is made with A I. A I agents gather the news, and our voices are synthetic. Three headlines this week. Drought pushes the Rhine to record lows. Carriers head back to Suez as Hormuz gets worse. And Cisco shows what a planning agent does with a planner's week."
+        },
+        {
+          "speaker": "M",
+          "text": "Plus a merger hangover at DSV, a slow warehouse ramp in Sweden, and new trade curbs between Brussels and Beijing."
+        }
+      ]
+    },
+    {
+      "id": "lead_stories",
+      "type": "speech",
+      "items": [
+        "2026-W43-38",
+        "2026-W43-39",
+        "2026-W43-V3",
+        "2026-W43-01",
+        "2026-W43-V2"
+      ],
+      "lines": [
+        {
+          "speaker": "F",
+          "text": "First, the Rhine. Drought has pushed water levels to record lows. Barges from Rotterdam bound for Kaub now carry about two hundred and eighty tonnes. A standard load is two and a half thousand. That's barely a tenth."
+        },
+        {
+          "speaker": "M",
+          "text": "So the freight moves to rail?"
+        },
+        {
+          "speaker": "F",
+          "text": "It tries to. But the right-bank line between Troisdorf and Wiesbaden is under works until the twelfth of December. V T G says there's little reserve capacity left."
+        },
+        {
+          "speaker": "M",
+          "text": "And Switzerland sits at the far end of that river."
+        },
+        {
+          "speaker": "F",
+          "text": "Right. Swiss deliveries of diesel, heating oil, coal and cocoa are restricted. Switzerland has released petroleum and jet fuel reserves. And Swiss barge rates hit a record."
+        },
+        {
+          "speaker": "M",
+          "text": "Low water is a season now, not a surprise. If your network leans on the Rhine, line up rail and road fallback, and move stock forward before the levels drop."
+        },
+        {
+          "speaker": "F",
+          "text": "Our second lead is at sea. Freightos says carriers are steadily returning to Suez, despite the Houthi risk. It expects a full recovery in the first quarter of next year."
+        },
+        {
+          "speaker": "M",
+          "text": "Which means more ships on the route, and shorter trips."
+        },
+        {
+          "speaker": "F",
+          "text": "More effective capacity, and Freightos sees a risk of overcapacity next year. For now, rates are rising. Freightos has Asia to North Europe up six percent, to about three thousand four hundred dollars per forty-foot box."
+        },
+        {
+          "speaker": "M",
+          "text": "And the Gulf?"
+        },
+        {
+          "speaker": "F",
+          "text": "Going the other way. Iran has stepped up attacks around Hormuz. The week before, a projectile sank a container ship. Drewry counted only two containerships entering the Gulf in week forty-two, down from five."
+        },
+        {
+          "speaker": "M",
+          "text": "Two ships in a whole week. And Suez?"
+        },
+        {
+          "speaker": "F",
+          "text": "Suez transits edged up to fifty-five, from fifty-four. Two lanes moving in opposite directions."
+        },
+        {
+          "speaker": "M",
+          "text": "Then plan for both. Asia to Europe lead times may shorten by early next year, so build a lead-time and rate reset into your twenty twenty-seven parameters. And treat the Gulf as a separate risk."
+        },
+        {
+          "speaker": "F",
+          "text": "Road freight has its own warning. Adrian Gonzalez of Adelante S C M wrote on his Talking Logistics blog that shippers should prepare for higher truck rates in twenty twenty-seven."
+        },
+        {
+          "speaker": "M",
+          "text": "Why?"
+        },
+        {
+          "speaker": "F",
+          "text": "He points to cost pressure from diesel, insurance and driver recruiting. And he says shrinking capacity is moving pricing power back to carriers."
+        },
+        {
+          "speaker": "M",
+          "text": "So next year's transport budget needs room for that. Don't plan on cheap trucks in twenty twenty-seven. Third lead, and it's A I."
+        },
+        {
+          "speaker": "F",
+          "text": "At the A S C M CHAINge conference, Cisco's head of supply chain transformation, Joe McMorrow, presented an A I agent now in production. Forty-two demand planners use it."
+        },
+        {
+          "speaker": "M",
+          "text": "What does it actually do?"
+        },
+        {
+          "speaker": "F",
+          "text": "It automates forecast versus actual analysis, the routine check of plan against what really happened. Planners can ask follow-up questions in a chat. Cisco says each planner saves at least six hours a week."
+        },
+        {
+          "speaker": "M",
+          "text": "And did Cisco cut any planners?"
+        },
+        {
+          "speaker": "F",
+          "text": "No. Demand-planning headcount stays the same. The time goes into planning insight and more work with sales. The article gives no accuracy or financial figures."
+        },
+        {
+          "speaker": "M",
+          "text": "That's a benchmark worth copying. The payback is planner time moved from routine variance checks to judgement. And it rests on business knowledge, data and human review behind the agent."
+        },
+        {
+          "speaker": "F",
+          "text": "Glenn Richey of Auburn University made a similar point on the Supply Chain Now podcast this month. In his words, \"AI magnifies the foundation that's underneath it, right? It doesn't fix bad visibility.\""
+        },
+        {
+          "speaker": "M",
+          "text": "He adds that spotting a problem isn't solving it. Alerts alone don't change orders, allocations or transport plans."
+        }
+      ]
+    },
+    {
+      "id": "ai_tech",
+      "type": "speech",
+      "items": [
+        "2026-W43-05",
+        "2026-W43-04",
+        "2026-W43-02",
+        "2026-W43-03",
+        "2026-W43-21",
+        "2026-W43-07"
+      ],
+      "lines": [
+        {
+          "speaker": "M",
+          "text": "Starting with people. A S C M and the Digital Supply Chain Institute have a new report out, called The People Paradox in Supply Chain A I Integration."
+        },
+        {
+          "speaker": "F",
+          "text": "What does it find?"
+        },
+        {
+          "speaker": "M",
+          "text": "Eighty-three percent of supply chain leaders say their workers can't yet use A I well."
+        },
+        {
+          "speaker": "F",
+          "text": "And are people worried about their jobs?"
+        },
+        {
+          "speaker": "M",
+          "text": "Ninety-one percent plan to use A I to support people. Only seven percent expect it to replace them. The sample is small, though. About a hundred and forty responses, a hundred and seven analysed, mostly North American."
+        },
+        {
+          "speaker": "F",
+          "text": "So the brake on agentic planning is change management and upskilling, more than the tools."
+        },
+        {
+          "speaker": "M",
+          "text": "And the money side. Sal Arora, who co-leads McKinsey's operations practice, cites a McKinsey survey where only about six percent of respondents credit A I with at least five percent of operating profit."
+        },
+        {
+          "speaker": "F",
+          "text": "So who's getting it right?"
+        },
+        {
+          "speaker": "M",
+          "text": "Research from M I T and McKinsey says the leaders' impact multiple rose from two point seven times in twenty twenty-one to four point seven times this year. Where workflows were redesigned end to end, Arora reports supply chain agents cutting cost of goods by four to seven percent."
+        },
+        {
+          "speaker": "F",
+          "text": "Then tie the planning A I business case to the P and L and a redesigned workflow, not to a count of use cases."
+        }
+      ]
+    },
+    {
+      "id": "sign_off",
+      "type": "speech",
+      "items": [
+        "2026-W43-38",
+        "2026-W43-39",
+        "2026-W43-01"
+      ],
+      "lines": [
+        {
+          "speaker": "F",
+          "text": "That's the desk for this week. Low rivers, busy straits, and an A I agent that gives planners their time back instead of taking their jobs."
+        },
+        {
+          "speaker": "M",
+          "text": "Next week, we'll see whether rates hold as more ships return to Suez. I'm Erik."
+        },
+        {
+          "speaker": "F",
+          "text": "And I'm Anna. The Planning Desk is made in partnership with Optilon. See you next Sunday."
+        }
+      ]
+    },
+    {
+      "id": "outro_music",
+      "type": "music",
+      "duration_sec": 10
+    }
+  ],
+  "show_notes": {
+    "summary": "Drought pushes the Rhine to record lows just as German rail works squeeze the overflow. Carriers drift back to Suez while Hormuz attacks keep box ships out of the Gulf, and Cisco shows a demand-planning AI agent saving planners six hours a week. Plus DSV's Schenker hangover, a slow warehouse ramp at Meds, new EU and China trade curbs, and SAP and Pigment in market moves.",
+    "sources": []
+  }
+}
