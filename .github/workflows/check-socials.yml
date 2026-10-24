@@ -13,6 +13,7 @@ jobs:
       INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
       LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
       LINKEDIN_TOKEN_SET_ON: ${{ vars.LINKEDIN_TOKEN_SET_ON }}
+      BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
     steps:
       - name: Instagram
         if: ${{ env.INSTAGRAM_TOKEN != '' }}
@@ -53,3 +54,21 @@ jobs:
           else:
               age = (date.today() - date.fromisoformat(set_on.strip())).days
               print(f"Token set {age} days ago; it expires after 60.")
+
+      - name: Buttondown
+        if: ${{ env.BUTTONDOWN_API_KEY != '' }}
+        shell: python
+        run: |
+          import json, os, urllib.request, urllib.error
+          def get(path):
+              req = urllib.request.Request(f"https://api.buttondown.com/v1/{path}", headers={"Authorization": f"Token {os.environ['BUTTONDOWN_API_KEY']}"})
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      return json.loads(r.read())
+              except urllib.error.HTTPError as e:
+                  raise SystemExit(f"{path}: HTTP {e.code} {e.read().decode()[:400]}")
+          nl = get("newsletters")
+          for n in nl.get("results", []):
+              print(f"::notice::Newsletter '{n.get('name')}' username={n.get('username')}")
+          subs = get("subscribers?page_size=1")
+          print(f"Subscribers: {subs.get('count')}")
