@@ -21,7 +21,9 @@
     "base_url": "https://jimthulin.github.io/planning-desk-podcast/",
     "apple_url": "",
     "spotify_url": "",
-    "audio_base_url": "https://github.com/jimthulin/planning-desk-podcast/releases/download/"
+    "audio_base_url": "https://github.com/jimthulin/planning-desk-podcast/releases/download/",
+    "linkedin_url": "https://www.linkedin.com/company/the-planning-desk/",
+    "instagram_url": "https://www.instagram.com/theplanningdesk.podcast/"
   },
   "voices": {
     "F": {

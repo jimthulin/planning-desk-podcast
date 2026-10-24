@@ -238,7 +238,7 @@ def build_index(cfg: dict, registry: list[dict]) -> None:
     base = base_url(pod)
     links = [f'<a href="{html.escape(base)}feed.xml">RSS feed</a>']
     for name, key in (("Apple Podcasts", "apple_url"), ("Spotify", "spotify_url"), ("YouTube", "youtube_url"),
-                      ("Newsletter", "newsletter_url")):
+                      ("Newsletter", "newsletter_url"), ("LinkedIn", "linkedin_url"), ("Instagram", "instagram_url")):
         if pod.get(key):
             links.insert(len(links) - 1, f'<a href="{html.escape(pod[key], quote=True)}">{name}</a>')
     eps = []
