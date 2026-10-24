@@ -1,75 +1,82 @@
 import React from 'react';
 import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
-import {C, FONT} from '../theme.js';
+import {C, FONT, HEAD} from '../theme.js';
 import {useEnter} from '../components/Scene.jsx';
+import {Mark} from '../components/Chrome.jsx';
 
-// A small animated supply network, echoing the cover art.
-const Network = ({frame}) => {
-  const tiers = [
-    [[1080, 230], [1260, 210], [1440, 240], [1620, 220], [1780, 250]],
-    [[1180, 470], [1450, 450], [1700, 480]],
-    [[1060, 700], [1210, 720], [1360, 690], [1510, 710], [1660, 700], [1800, 720]],
-  ];
-  const edges = [];
-  tiers[0].forEach((a) => tiers[1].forEach((b) => Math.abs(a[0] - b[0]) < 300 && edges.push([a, b])));
-  tiers[1].forEach((b) => tiers[2].forEach((c) => Math.abs(b[0] - c[0]) < 260 && edges.push([b, c])));
-  const hot = [tiers[0][2], tiers[1][1], tiers[2][3]];
-  const grow = interpolate(frame, [0, 60], [0, 1], {extrapolateRight: 'clamp'});
-  const flow = interpolate(frame, [40, 110], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
-  const hotLen = Math.hypot(hot[1][0] - hot[0][0], hot[1][1] - hot[0][1]) + Math.hypot(hot[2][0] - hot[1][0], hot[2][1] - hot[1][1]);
+// A faded demand-and-capacity chart behind the bookends, like the end cards of the LinkedIn films.
+const GhostChart = ({frame}) => {
+  const x0 = 1000, x1 = 1840, y0 = 860, y1 = 220;
+  const n = 26;
+  const demand = Array.from({length: n}, (_, i) => 0.32 + 0.016 * i + 0.06 * Math.sin(i / 2.2));
+  const grow = interpolate(frame, [0, 50], [0, 1], {extrapolateRight: 'clamp'});
+  const bw = (x1 - x0) / n - 8;
+  const pts = demand.map((d, i) => [x0 + i * ((x1 - x0) / n) + bw / 2, y0 - d * (y0 - y1)]);
+  const cap = [[x0, y0 - 0.5 * (y0 - y1)], [x0 + 300, y0 - 0.5 * (y0 - y1)], [x0 + 300, y0 - 0.68 * (y0 - y1)], [x0 + 620, y0 - 0.68 * (y0 - y1)], [x0 + 620, y0 - 0.86 * (y0 - y1)], [x1, y0 - 0.86 * (y0 - y1)]];
   return (
-    <svg width={1920} height={1080} style={{position: 'absolute'}}>
-      {edges.map(([a, b], i) => (
-        <line key={i} x1={a[0]} y1={a[1]} x2={a[0] + (b[0] - a[0]) * grow} y2={a[1] + (b[1] - a[1]) * grow} stroke={C.muted} strokeOpacity={0.4} strokeWidth={3} />
+    <svg width={1920} height={1080} style={{position: 'absolute', opacity: 0.55}}>
+      {[0.25, 0.5, 0.75].map((g) => <line key={g} x1={x0} x2={x1} y1={y0 - g * (y0 - y1)} y2={y0 - g * (y0 - y1)} stroke={C.grid} strokeWidth={1.5} />)}
+      {demand.map((d, i) => (
+        <rect key={i} x={x0 + i * ((x1 - x0) / n)} width={bw} y={y0 - d * (y0 - y1) * grow} height={d * (y0 - y1) * grow} fill={C.sage} opacity={0.55} />
       ))}
-      <path d={`M${hot[0].join(',')} L${hot[1].join(',')} L${hot[2].join(',')}`} fill="none" stroke={C.amber} strokeWidth={8}
-        strokeDasharray={`${hotLen} ${hotLen}`} strokeDashoffset={hotLen * (1 - flow)} strokeLinecap="round" />
-      {tiers[0].map((p, i) => <circle key={`a${i}`} cx={p[0]} cy={p[1]} r={12 * grow} fill={C.teal} />)}
-      {tiers[1].map((p, i) => <rect key={`b${i}`} x={p[0] - 26} y={p[1] - 26} width={52} height={52} rx={10} fill={C.white} opacity={grow} />)}
-      {tiers[2].map((p, i) => <circle key={`c${i}`} cx={p[0]} cy={p[1]} r={10 * grow} fill="none" stroke={C.white} strokeWidth={4} />)}
-      {hot.map((p, i) => <circle key={`h${i}`} cx={p[0]} cy={p[1]} r={18 * flow} fill={C.amber} />)}
+      <polyline points={pts.map((p) => p.join(',')).join(' ')} fill="none" stroke={C.ink} strokeOpacity={0.35} strokeWidth={3} opacity={grow} />
+      <polyline points={cap.map((p) => p.join(',')).join(' ')} fill="none" stroke={C.orange} strokeOpacity={0.45} strokeWidth={3} strokeDasharray="10 8" opacity={grow} />
+      <line x1={x0} x2={x1} y1={y0} y2={y0} stroke={C.grid} strokeWidth={2} />
     </svg>
   );
 };
 
-export const TitleCard = ({show, week, episodeTitle}) => {
+const Brand = ({p}) => (
+  <div style={{display: 'flex', alignItems: 'center', gap: 22, opacity: p, transform: `translateY(${(1 - p) * 14}px)`}}>
+    <Mark size={68} />
+    <div style={{fontFamily: HEAD, fontWeight: 700, fontSize: 52, color: C.orange, letterSpacing: -0.5}}>The Planning Desk</div>
+  </div>
+);
+
+const Footer = ({left, right, p}) => (
+  <>
+    {left && <div style={{position: 'absolute', left: 110, bottom: 44, fontFamily: FONT, fontSize: 20, color: C.muted, opacity: p, maxWidth: 1100}}>{left}</div>}
+    {right && <div style={{position: 'absolute', right: 80, bottom: 44, fontFamily: FONT, fontWeight: 700, fontSize: 20, color: C.sub, opacity: p}}>{right}</div>}
+  </>
+);
+
+export const TitleCard = ({week, episodeTitle, disclosure, credit}) => {
   const frame = useCurrentFrame();
-  const a = useEnter(6, 20);
-  const b = useEnter(16, 20);
-  const c = useEnter(34, 20);
-  const words = (show || '').toUpperCase().replace(/^THE /, '');
+  const a = useEnter(4, 18);
+  const b = useEnter(14, 18);
+  const c = useEnter(26, 18);
+  const title = episodeTitle || '';
   return (
     <AbsoluteFill style={{fontFamily: FONT}}>
-      <Network frame={frame} />
-      <div style={{position: 'absolute', left: 140, top: 300}}>
-        <div style={{color: C.amber, fontSize: 64, fontWeight: 800, opacity: a, transform: `translateY(${(1 - a) * 20}px)`}}>THE</div>
-        <div style={{color: C.white, fontSize: 170, fontWeight: 900, lineHeight: 0.95, opacity: b, transform: `translateY(${(1 - b) * 30}px)`, maxWidth: 900}}>
-          {words}
-        </div>
-        <div style={{width: 160 * c, height: 10, background: C.amber, borderRadius: 5, marginTop: 40}} />
-        <div style={{color: C.muted, fontSize: 36, fontWeight: 600, marginTop: 30, opacity: c}}>{week}</div>
-        <div style={{color: C.white, fontSize: 52, fontWeight: 800, marginTop: 8, opacity: c, maxWidth: 900}}>{episodeTitle}</div>
+      <GhostChart frame={frame} />
+      <div style={{position: 'absolute', left: 110, top: 300, width: 860}}>
+        <Brand p={a} />
+        <div style={{fontFamily: HEAD, fontWeight: 700, color: C.ink, fontSize: title.length > 48 ? 70 : 88, lineHeight: 1.05, marginTop: 56,
+          letterSpacing: -1, opacity: b, transform: `translateY(${(1 - b) * 16}px)`}}>{title}</div>
+        <div style={{fontSize: 36, color: C.text, marginTop: 30, opacity: c}}>{week}</div>
       </div>
+      <Footer left={disclosure} right={credit} p={c} />
     </AbsoluteFill>
   );
 };
 
-export const OutroCard = ({show, credit, disclosure, site}) => {
+export const OutroCard = ({credit, disclosure, site, daily}) => {
   const frame = useCurrentFrame();
-  const a = useEnter(4, 20);
-  const b = useEnter(18, 20);
+  const a = useEnter(4, 18);
+  const b = useEnter(16, 18);
   return (
     <AbsoluteFill style={{fontFamily: FONT}}>
-      <Network frame={frame + 60} />
-      <div style={{position: 'absolute', left: 140, top: 260, maxWidth: 900}}>
-        <div style={{color: C.amber, fontSize: 40, fontWeight: 800, letterSpacing: 3, opacity: a}}>NEW EPISODES EVERY SUNDAY</div>
-        <div style={{color: C.white, fontSize: 130, fontWeight: 900, lineHeight: 0.98, marginTop: 20, opacity: a}}>{show}</div>
-        <div style={{opacity: b, marginTop: 44}}>
-          {credit && <div style={{color: C.white, fontSize: 38, fontWeight: 700}}>{credit}</div>}
-          {disclosure && <div style={{color: C.muted, fontSize: 28, fontWeight: 500, lineHeight: 1.35, marginTop: 18}}>{disclosure}</div>}
-          {site && <div style={{color: C.teal, fontSize: 30, fontWeight: 700, marginTop: 26}}>{site}</div>}
+      <GhostChart frame={frame + 50} />
+      <div style={{position: 'absolute', left: 110, top: 320, width: 860}}>
+        <Brand p={a} />
+        <div style={{fontFamily: HEAD, fontWeight: 700, color: C.ink, fontSize: 80, lineHeight: 1.05, marginTop: 56, letterSpacing: -1, opacity: b}}>
+          {daily ? 'Supply chain planning, every weekday.' : 'Supply chain planning, every Sunday.'}
+        </div>
+        <div style={{fontSize: 36, color: C.text, marginTop: 30, opacity: b, lineHeight: 1.35}}>
+          {daily ? 'Week in review every Sunday.' : 'Fifteen minutes on the week.'}{site ? <><br /><span style={{color: C.blue, fontWeight: 700}}>{site}</span></> : null}
         </div>
       </div>
+      <Footer left={disclosure} right={credit} p={b} />
     </AbsoluteFill>
   );
 };
