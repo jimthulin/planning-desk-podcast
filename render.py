@@ -6,6 +6,9 @@ re-runs don't spend credits twice), then intro music, dialogue and outro music a
 stitched with ffmpeg, loudness-normalised and written as an MP3 with a transcript and
 a timeline next to it.
 
+Daily scripts ("format": "daily") get 5-second music at each end and, when the script has a
+"short" block, a separate vertical-video soundtrack (planning-desk-<stem>-short.mp3/json).
+
 Usage:
   python render.py episodes/scripts/script-2026-10-23.json
   python render.py episodes/scripts/script-2026-10-23.json --fake   # no API key, placeholder tones
@@ -23,6 +26,22 @@ from podcast_lib import (ROOT, ElevenLabsError, cache_key, duration, load_config
 
 BUILD = ROOT / "build"
 CACHE = BUILD / "cache"
+
+
+def episode_format(script: dict) -> str:
+    return "daily" if script.get("format") == "daily" else "weekly"
+
+
+def episode_title(cfg: dict, script: dict) -> str:
+    """Feed title without the show name: 'Week 44: ...' or 'Mon 2 Nov: ...'."""
+    from datetime import date
+    name = (script.get("episode_title") or "").strip()
+    if episode_format(script) == "daily":
+        d = date.fromisoformat(script.get("run_date"))
+        return f"{d.strftime('%a')} {d.day} {d.strftime('%b')}: {name}".strip(": ")
+    week = script.get("week", "")
+    week_no = week.split("-W")[-1] if "-W" in week else ""
+    return f"Week {week_no}: {name}".strip(": ")
 
 
 def collect_lines(script: dict) -> list[dict]:
@@ -95,18 +114,14 @@ def build_episode(script_path: Path, fake: bool) -> Path:
         if not asset.exists():
             raise SystemExit(f"Missing {asset.relative_to(ROOT)}. Run make_jingles.py first.")
 
+    fmt = episode_format(script)
+    jingle_sec = float(cfg.get("formats", {}).get(fmt, {}).get("jingle_sec", 10))
     lines = collect_lines(script)
     chars = sum(len(l["text"]) for l in lines)
-    print(f"{len(lines)} lines, {chars} characters to voice ({'fake' if fake else cfg['tts']['model_id']}).")
+    print(f"{fmt} episode: {len(lines)} lines, {chars} characters to voice ({'fake' if fake else cfg['tts']['model_id']}).")
 
     voicer = Voicer(cfg, fake)
-    clips: list[Path | None] = [None] * len(lines)
-    with ThreadPoolExecutor(max_workers=cfg["tts"].get("max_workers", 3)) as pool:
-        futures = {pool.submit(voicer.voice, line): i for i, line in enumerate(lines)}
-        for n, fut in enumerate(as_completed(futures), 1):
-            clips[futures[fut]] = fut.result()
-            if n % 10 == 0 or n == len(lines):
-                print(f"  voiced {n}/{len(lines)}")
+    clips = voice_all(voicer, lines, cfg)
 
     # Normalise every piece to the same PCM format, then concatenate.
     gap_line, gap_seg = work / "gap_line.wav", work / "gap_seg.wav"
@@ -116,10 +131,16 @@ def build_episode(script_path: Path, fake: bool) -> Path:
     silence(gap_intro, mix["gap_after_intro_sec"])
     silence(gap_outro, mix["gap_before_outro_sec"])
 
-    intro_len, outro_len = duration(intro), duration(outro)
+    # Shorter episodes use the first seconds of the intro and the last seconds of the outro,
+    # so the outro still ends on its final chord.
+    intro_len = min(duration(intro), jingle_sec)
+    outro_full = duration(outro)
+    outro_start = max(outro_full - jingle_sec, 0)
+    outro_len = outro_full - outro_start
     intro_wav, outro_wav = work / "intro.wav", work / "outro.wav"
-    to_wav(intro, intro_wav, f"afade=t=out:st={max(intro_len - mix['intro_fade_out_sec'], 0):.2f}:d={mix['intro_fade_out_sec']}")
-    to_wav(outro, outro_wav, f"afade=t=in:d={mix['outro_fade_in_sec']},"
+    to_wav(intro, intro_wav, f"atrim=0:{intro_len:.2f},"
+                             f"afade=t=out:st={max(intro_len - mix['intro_fade_out_sec'], 0):.2f}:d={mix['intro_fade_out_sec']}")
+    to_wav(outro, outro_wav, f"atrim={outro_start:.2f},asetpts=PTS-STARTPTS,afade=t=in:d={mix['outro_fade_in_sec']},"
                              f"afade=t=out:st={max(outro_len - mix['outro_fade_out_sec'], 0):.2f}:d={mix['outro_fade_out_sec']}")
 
     sequence: list[Path] = [intro_wav, gap_intro]
@@ -145,8 +166,7 @@ def build_episode(script_path: Path, fake: bool) -> Path:
     run(["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", str(concat_list), "-c", "copy", str(joined)])
 
     week = script.get("week", "")
-    week_no = week.split("-W")[-1] if "-W" in week else ""
-    title = f"{cfg['show']}, Week {week_no}: {script.get('episode_title', '')}".strip()
+    title = f"{cfg['show']}, {episode_title(cfg, script)}"
     mp3 = out_dir / f"planning-desk-{stem}.mp3"
     run(["ffmpeg", "-y", "-v", "error", "-i", str(joined),
          "-af", f"loudnorm=I={mix['loudness_lufs']}:TP={mix['true_peak_db']}:LRA=11",
@@ -158,7 +178,8 @@ def build_episode(script_path: Path, fake: bool) -> Path:
 
     total = duration(mp3)
     (out_dir / f"planning-desk-{stem}.json").write_text(json.dumps({
-        "title": title, "run_date": script.get("run_date"), "week": week, "duration_sec": round(total, 1),
+        "title": title, "format": fmt, "run_date": script.get("run_date"), "week": week, "duration_sec": round(total, 1),
+        "outro_start_sec": round(total - outro_len, 2),
         "lines": len(lines), "characters": chars, "model_id": "fake" if fake else voicer.model,
         "timeline": timeline}, indent=2, ensure_ascii=False), encoding="utf-8")
     transcript = [title, ""] + [f"[{int(e['start_sec'] // 60):02d}:{int(e['start_sec'] % 60):02d}] "
@@ -166,6 +187,66 @@ def build_episode(script_path: Path, fake: bool) -> Path:
     (out_dir / f"planning-desk-{stem}.txt").write_text("\n".join(transcript) + "\n", encoding="utf-8")
 
     print(f"Done: {mp3.relative_to(ROOT)}  {int(total // 60)}:{int(total % 60):02d}  ({title})")
+
+    if fmt == "daily" and (script.get("short") or {}).get("lines"):
+        build_short(script, stem, cfg, voicer, work, out_dir)
+    return mp3
+
+
+def voice_all(voicer: "Voicer", lines: list[dict], cfg: dict) -> list[Path]:
+    clips: list[Path | None] = [None] * len(lines)
+    with ThreadPoolExecutor(max_workers=cfg["tts"].get("max_workers", 3)) as pool:
+        futures = {pool.submit(voicer.voice, line): i for i, line in enumerate(lines)}
+        for n, fut in enumerate(as_completed(futures), 1):
+            clips[futures[fut]] = fut.result()
+            if n % 10 == 0 or n == len(lines):
+                print(f"  voiced {n}/{len(lines)}")
+    return clips  # type: ignore[return-value]
+
+
+def build_short(script: dict, stem: str, cfg: dict, voicer: "Voicer", work: Path, out_dir: Path) -> Path:
+    """Soundtrack for the vertical video: the short's own lines, no music, a touch louder for phones."""
+    mix, sc = cfg["mix"], cfg.get("short", {})
+    short = script["short"]
+    lines = [{"segment": "short", "first_in_segment": i == 0, "speaker": l["speaker"], "text": l["text"].strip()}
+             for i, l in enumerate(short["lines"]) if l.get("text", "").strip()]
+    print(f"Short: {len(lines)} lines, {sum(len(l['text']) for l in lines)} characters.")
+    clips = voice_all(voicer, lines, cfg)
+    sdir = work / "short"
+    sdir.mkdir(exist_ok=True)
+    lead, tail, gap = sdir / "lead.wav", sdir / "tail.wav", sdir / "gap.wav"
+    silence(lead, sc.get("lead_sec", 0.3))
+    silence(tail, sc.get("tail_sec", 2.5))
+    silence(gap, mix["gap_between_lines_sec"])
+    tempo = float(mix.get("speech_tempo", 1.0))
+    seq, timeline, t = [lead], [], sc.get("lead_sec", 0.3)
+    for i, (line, clip) in enumerate(zip(lines, clips)):
+        if i > 0:
+            seq.append(gap)
+            t += mix["gap_between_lines_sec"]
+        wav = sdir / f"line_{i:02d}.wav"
+        to_wav(clip, wav, f"atempo={tempo}" if abs(tempo - 1.0) > 0.001 else None)
+        d = duration(wav)
+        timeline.append({"start_sec": round(t, 2), "duration_sec": round(d, 2), "segment": "short",
+                         "speaker": cfg["voices"][line["speaker"]]["name"], "text": line["text"]})
+        seq.append(wav)
+        t += d
+    end_card_at = t
+    seq.append(tail)
+    lst = sdir / "concat.txt"
+    lst.write_text("".join(f"file '{p.resolve()}'\n" for p in seq), encoding="utf-8")
+    joined = sdir / "joined.wav"
+    run(["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", str(lst), "-c", "copy", str(joined)])
+    mp3 = out_dir / f"planning-desk-{stem}-short.mp3"
+    run(["ffmpeg", "-y", "-v", "error", "-i", str(joined),
+         "-af", f"loudnorm=I={sc.get('loudness_lufs', -14)}:TP={mix['true_peak_db']}:LRA=11",
+         "-ar", "44100", "-ac", "2", "-c:a", "libmp3lame", "-b:a", mix["mp3_bitrate"], str(mp3)])
+    total = duration(mp3)
+    (out_dir / f"planning-desk-{stem}-short.json").write_text(json.dumps({
+        "title": short.get("title") or script.get("episode_title"), "run_date": script.get("run_date"),
+        "duration_sec": round(total, 1), "end_card_sec": round(end_card_at, 2), "timeline": timeline},
+        indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"Done: {mp3.relative_to(ROOT)}  {total:.1f}s")
     return mp3
 
 

@@ -1,0 +1,243 @@
+{
+  "show": "The Planning Desk",
+  "format": "daily",
+  "episode_title": "Hormuz hits a record",
+  "week": "2026-W44",
+  "run_date": "2026-10-26",
+  "brief_file": "news-brief-2026-10-26-test.md",
+  "target_runtime_sec": 360,
+  "word_count": 470,
+  "hosts": {
+    "F": {
+      "name": "Anna"
+    },
+    "M": {
+      "name": "Erik"
+    }
+  },
+  "segments": [
+    {
+      "id": "intro_music",
+      "type": "music",
+      "duration_sec": 5
+    },
+    {
+      "id": "cold_open",
+      "type": "speech",
+      "items": [
+        "2026-W43-01"
+      ],
+      "lines": [
+        {
+          "speaker": "F",
+          "text": "Twelve ships attacked in one week in the Strait of Hormuz. A record."
+        },
+        {
+          "speaker": "M",
+          "text": "And traffic there is still about seventy percent below normal. This is The Planning Desk."
+        }
+      ]
+    },
+    {
+      "id": "welcome",
+      "type": "speech",
+      "items": [
+        "2026-W43-01",
+        "2026-W43-04"
+      ],
+      "lines": [
+        {
+          "speaker": "F",
+          "text": "Good morning. It's Monday the twenty-sixth of October. I'm Anna."
+        },
+        {
+          "speaker": "M",
+          "text": "And I'm Erik. Quick note: this show is made with A I. A I agents gather the news, and our voices are synthetic."
+        },
+        {
+          "speaker": "F",
+          "text": "Today: Hormuz, ICA's new warehouse map, and why A I pilots stall."
+        }
+      ]
+    },
+    {
+      "id": "top_story",
+      "type": "speech",
+      "items": [
+        "2026-W43-01"
+      ],
+      "lines": [
+        {
+          "speaker": "F",
+          "text": "The maritime security agency U K M T O counted attacks on twelve vessels in and around the strait in the week of the fifth to the eleventh of October. That's the most it has ever recorded there in one week."
+        },
+        {
+          "speaker": "M",
+          "text": "Has it calmed down since?"
+        },
+        {
+          "speaker": "F",
+          "text": "No. More tankers were hit on the seventeenth, and a tug on the eighteenth. Transits in the second week of October were about seventy percent below normal."
+        },
+        {
+          "speaker": "M",
+          "text": "So treat it as the new normal. If you buy Gulf energy or petrochemicals, put explicit lead-time buffers on those lanes now."
+        }
+      ]
+    },
+    {
+      "id": "briefing",
+      "type": "speech",
+      "items": [
+        "2026-W43-04",
+        "2026-W43-08",
+        "2026-W43-02",
+        "2026-W43-19"
+      ],
+      "lines": [
+        {
+          "speaker": "M",
+          "text": "To Sweden. ICA has updated its logistics masterplan. It swaps single-category central warehouses for three regional hubs, in Helsingborg, Västerås and Göteborg."
+        },
+        {
+          "speaker": "F",
+          "text": "What's behind it?"
+        },
+        {
+          "speaker": "M",
+          "text": "An automated fresh-goods warehouse in Västerås of about one hundred and twenty thousand square metres, with construction from next year. Each hub carries a base range and can supply the full assortment."
+        },
+        {
+          "speaker": "F",
+          "text": "A big grocer trading category scale for regional redundancy. Resilience now has a line in the business case."
+        },
+        {
+          "speaker": "F",
+          "text": "Next, A I. At the B V L conference in Berlin, a study from B V L and 4flow found eighty-three percent of companies already use or pilot A I in their supply chains."
+        },
+        {
+          "speaker": "M",
+          "text": "So adoption is done. What's missing?"
+        },
+        {
+          "speaker": "F",
+          "text": "The study says results depend on strategy, business cases, governance and skills. A Gartner survey of about two thousand chief information officers agrees. Only thirteen percent say A I has delivered value at scale."
+        },
+        {
+          "speaker": "M",
+          "text": "So the gap is governance, not the models. That's where planning leaders can move first."
+        },
+        {
+          "speaker": "M",
+          "text": "Shipping. The Gemini network moves four more Asia to Europe loops back through Suez from mid-November."
+        },
+        {
+          "speaker": "F",
+          "text": "Good news for transit times. But expect a few weeks of bunching at North European ports while schedules reset."
+        },
+        {
+          "speaker": "F",
+          "text": "And one view on German trade. Commerzbank economist Vincent Stamer says real German exports have been falling since their peak in twenty eighteen and nineteen."
+        },
+        {
+          "speaker": "M",
+          "text": "Which matters if your forecast still assumes the old export engine comes back."
+        }
+      ]
+    },
+    {
+      "id": "quick_hits",
+      "type": "speech",
+      "items": [
+        "2026-W43-07",
+        "2026-W43-10",
+        "2026-W43-20"
+      ],
+      "lines": [
+        {
+          "speaker": "M",
+          "text": "Quick hits. SKF largely offset tariff costs again last quarter."
+        },
+        {
+          "speaker": "F",
+          "text": "A Kühne Logistics University survey: eighty-three percent expect climate adaptation to force a network redesign."
+        },
+        {
+          "speaker": "M",
+          "text": "And Mars and Rewe won the Deutscher Logistik-Preis for an electrified factory-to-shelf chain."
+        }
+      ]
+    },
+    {
+      "id": "sign_off",
+      "type": "speech",
+      "items": [
+        "2026-W43-01"
+      ],
+      "lines": [
+        {
+          "speaker": "F",
+          "text": "That's the desk for Monday. The Planning Desk is made in partnership with Optilon."
+        },
+        {
+          "speaker": "M",
+          "text": "We're back tomorrow morning. I'm Erik."
+        },
+        {
+          "speaker": "F",
+          "text": "And I'm Anna. Have a good one."
+        }
+      ]
+    },
+    {
+      "id": "outro_music",
+      "type": "music",
+      "duration_sec": 5
+    }
+  ],
+  "short": {
+    "title": "Hormuz: a record week of attacks",
+    "lines": [
+      {
+        "speaker": "F",
+        "text": "Twelve ships attacked in one week. That's a record for the Strait of Hormuz."
+      },
+      {
+        "speaker": "M",
+        "text": "And it didn't stop. More tankers were hit on the seventeenth, and a tug the next day."
+      },
+      {
+        "speaker": "F",
+        "text": "Traffic through the strait is still about seventy percent below normal."
+      },
+      {
+        "speaker": "M",
+        "text": "If you buy Gulf energy or petrochemicals, put lead-time buffers on those lanes now."
+      },
+      {
+        "speaker": "F",
+        "text": "More every weekday on The Planning Desk podcast."
+      }
+    ],
+    "caption": "Twelve ships attacked in a single week: the Strait of Hormuz just had its worst week on record, and traffic is still about 70% below normal. What it means for lead times, in 45 seconds.\n\nFull episode: The Planning Desk, every weekday on Apple Podcasts and Spotify.\n\nAI-generated: AI agents gather the news and the voices are synthetic.",
+    "hashtags": [
+      "supplychain",
+      "logistics",
+      "shipping",
+      "Hormuz",
+      "planning"
+    ]
+  },
+  "linkedin": {
+    "page_post": "Twelve ships attacked in one week in the Strait of Hormuz, a record, and traffic is still about 70% below normal. Today's Planning Desk also covers ICA's new three-hub warehouse plan in Sweden and why most AI pilots in supply chain stall at governance.\n\nListen on Apple Podcasts or Spotify: The Planning Desk, every weekday.\n\n#supplychain #planning #logistics"
+  },
+  "show_notes": {
+    "summary": "Hormuz has its worst week on record for attacks on shipping, ICA moves to three regional hubs in Sweden, and a BVL study shows AI adoption is high but value at scale is rare.",
+    "sources": [
+      {
+        "title": "UKMTO advisory",
+        "url": "https://www.ukmto.org/"
+      }
+    ]
+  }
+}

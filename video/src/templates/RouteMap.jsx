@@ -6,8 +6,10 @@ import world110 from 'world-atlas/countries-110m.json';
 import world50 from 'world-atlas/countries-50m.json';
 import {C, FONT} from '../theme.js';
 import {Kicker} from './Cards.jsx';
+import {useLayout} from '../layout.js';
 
-const BOX = {x: 90, y: 300, w: 1740, h: 620};
+const BOX_H = {x: 90, y: 300, w: 1740, h: 620};
+const BOX_V = {x: 40, y: 240, w: 1000, h: 660};
 const countries110 = feature(world110, world110.objects.countries);
 const countries50 = feature(world50, world50.objects.countries);
 
@@ -15,6 +17,8 @@ const countries50 = feature(world50, world50.objects.countries);
 // and pins ({name, lat, lon, alert, muted}). The view fits everything shown.
 export const RouteMap = ({kicker, title, routes = [], points = [], pad = 8}) => {
   const frame = useCurrentFrame();
+  const {v, w: SW, h: SH} = useLayout();
+  const BOX = v ? BOX_V : BOX_H;
 
   const geo = useMemo(() => {
     const coords = [
@@ -50,13 +54,13 @@ export const RouteMap = ({kicker, title, routes = [], points = [], pad = 8}) => 
     });
     const projPoints = points.map((p) => ({...p, xy: projection([p.lon, p.lat])}));
     return {countryPaths, projRoutes, projPoints};
-  }, [routes, points, pad]);
+  }, [routes, points, pad, BOX]);
 
   const mapIn = interpolate(frame, [0, 14], [0, 1], {extrapolateRight: 'clamp'});
 
   return (
     <AbsoluteFill style={{fontFamily: FONT}}>
-      <svg width={1920} height={1080} style={{position: 'absolute', opacity: mapIn}}>
+      <svg width={SW} height={SH} style={{position: 'absolute', opacity: mapIn}}>
         <defs>
           <clipPath id="mapclip"><rect x={BOX.x} y={BOX.y} width={BOX.w} height={BOX.h} rx={28} /></clipPath>
         </defs>
@@ -103,17 +107,17 @@ export const RouteMap = ({kicker, title, routes = [], points = [], pad = 8}) => 
             <g key={i} opacity={x}>
               {p.alert && <circle cx={cx} cy={cy} r={14 + pulse * 46} fill="none" stroke={C.red} strokeWidth={4} strokeOpacity={1 - pulse} />}
               <circle cx={cx} cy={cy} r={13 * x} fill={color} stroke={C.ink} strokeWidth={4} />
-              <text x={cx + 24} y={cy + 10} fill={p.muted ? C.muted : C.white} fontSize={30} fontWeight={700}
+              <text x={cx + 24} y={cy + 10} fill={p.muted ? C.muted : C.white} fontSize={v ? 34 : 30} fontWeight={700}
                 style={{paintOrder: 'stroke', stroke: C.ink, strokeWidth: 8, strokeLinejoin: 'round'}}>{p.name}</text>
             </g>
           );
         })}
       </svg>
       {(kicker || title) && (
-        <div style={{position: 'absolute', left: BOX.x + 6, top: 146, right: BOX.x, opacity: mapIn, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 40}}>
+        <div style={{position: 'absolute', left: BOX.x + 6, top: v ? 10 : 146, right: BOX.x, opacity: mapIn, display: 'flex', flexDirection: v ? 'column' : 'row', alignItems: v ? 'flex-start' : 'flex-end', justifyContent: 'space-between', gap: v ? 14 : 40}}>
           <div>
             {kicker && <Kicker>{kicker}</Kicker>}
-            {title && <div style={{color: C.white, fontSize: 56, fontWeight: 800, lineHeight: 1.1, marginTop: 14, maxWidth: 1350}}>{title}</div>}
+            {title && <div style={{color: C.white, fontSize: v ? 48 : 56, fontWeight: 800, lineHeight: 1.1, marginTop: 14, maxWidth: v ? 960 : 1350}}>{title}</div>}
           </div>
           {routes.some((r) => r.label) && (
             <div style={{display: 'flex', gap: 28, paddingBottom: 10}}>

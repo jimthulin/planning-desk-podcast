@@ -28,6 +28,11 @@ export const SEGMENT_LABELS = {
   numbers: 'The numbers',
   events_ahead: 'Events ahead',
   quick_hits: 'Quick hits',
+  top_story: 'Top story',
+  briefing: 'The briefing',
+  week_threads: "The week's threads",
+  voices: 'Expert voices',
+  week_ahead: 'The week ahead',
   sign_off: 'Sign-off',
 };
 

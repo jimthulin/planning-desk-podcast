@@ -1,15 +1,16 @@
 import React, {useMemo} from 'react';
-import {AbsoluteFill, useCurrentFrame} from 'remotion';
-import {C, H, W} from '../theme.js';
+import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
+import {C} from '../theme.js';
 
 // Quiet moving backdrop: a soft gradient, a dot grid and a slowly drifting network.
 export const Background = () => {
   const frame = useCurrentFrame();
+  const {width: W, height: H} = useVideoConfig();
   const nodes = useMemo(() => {
     let seed = 7;
     const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
     return Array.from({length: 26}, () => ({x: rnd() * W, y: rnd() * H, vx: (rnd() - 0.5) * 0.25, vy: (rnd() - 0.5) * 0.2}));
-  }, []);
+  }, [W, H]);
   const pos = nodes.map((n) => ({
     x: ((n.x + n.vx * frame) % W + W) % W,
     y: ((n.y + n.vy * frame) % H + H) % H,

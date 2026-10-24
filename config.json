@@ -3,7 +3,7 @@
   "artist": "The Planning Desk",
   "podcast": {
     "title": "The Planning Desk",
-    "description": "Fifteen minutes of supply chain planning and design news every Sunday, with a focus on the Nordics and the DACH region: disruptions, trade and macro signals, planning technology and AI, real company use cases and the events worth your time. Made in partnership with Optilon.",
+    "description": "Supply chain planning and design news with a focus on the Nordics and the DACH region: a quick briefing every weekday morning and a fifteen-minute week in review every Sunday. Disruptions, trade and macro signals, planning technology and AI, real company use cases and the events worth your time. Made in partnership with Optilon.",
     "ai_disclosure": "The Planning Desk is produced with AI. AI agents gather and summarise the week's news from public sources, and the hosts' voices are synthetic.",
     "author": "The Planning Desk",
     "owner_name": "The Planning Desk",
@@ -20,7 +20,8 @@
     },
     "base_url": "https://jimthulin.github.io/planning-desk-podcast/",
     "apple_url": "",
-    "spotify_url": ""
+    "spotify_url": "",
+    "audio_base_url": "https://github.com/jimthulin/planning-desk-podcast/releases/download/"
   },
   "voices": {
     "F": {
@@ -72,5 +73,25 @@
       "Nordics",
       "DACH"
     ]
+  },
+  "formats": {
+    "daily": {
+      "jingle_sec": 5,
+      "publish_time": "06:30"
+    },
+    "weekly": {
+      "jingle_sec": 10,
+      "publish_time": "07:30"
+    }
+  },
+  "short": {
+    "lead_sec": 0.3,
+    "tail_sec": 2.5,
+    "loudness_lufs": -14,
+    "max_sec": 75,
+    "cta": "Every weekday on Apple Podcasts and Spotify"
+  },
+  "newsletter": {
+    "status": "draft"
   }
 }

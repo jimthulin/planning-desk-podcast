@@ -1,0 +1,102 @@
+{
+ "stem": "2026-10-26-test",
+ "format": "daily",
+ "short_cues": [
+  {
+   "line": 0,
+   "template": "stat",
+   "props": {
+    "kicker": "Strait of Hormuz",
+    "value": 12,
+    "label": "ships attacked in one week",
+    "note": "The most on record",
+    "source": "UKMTO"
+   }
+  },
+  {
+   "line": 0,
+   "at": "record",
+   "template": "route",
+   "props": {
+    "kicker": "5 to 11 October",
+    "title": "Record week of attacks",
+    "points": [
+     {
+      "name": "Strait of Hormuz",
+      "lat": 26.57,
+      "lon": 56.25,
+      "alert": true
+     }
+    ],
+    "pad": 4
+   }
+  },
+  {
+   "line": 1,
+   "template": "list",
+   "props": {
+    "title": "It didn't stop",
+    "items": [
+     {
+      "label": "17 Oct",
+      "detail": "More tankers hit",
+      "say": "seventeenth"
+     },
+     {
+      "label": "18 Oct",
+      "detail": "A tug struck",
+      "say": "tug"
+     }
+    ]
+   }
+  },
+  {
+   "line": 2,
+   "template": "stat",
+   "props": {
+    "kicker": "Hormuz traffic",
+    "value": 70,
+    "suffix": "%",
+    "label": "below normal",
+    "source": "UKMTO"
+   }
+  },
+  {
+   "line": 3,
+   "template": "takeaway",
+   "props": {
+    "kicker": "For planners",
+    "text": "Put lead-time buffers on Gulf energy and petrochemical lanes now."
+   }
+  },
+  {
+   "line": 3,
+   "at": "lead-time",
+   "template": "bars",
+   "props": {
+    "kicker": "Transits, second week of October",
+    "title": "Traffic vs normal",
+    "items": [
+     {
+      "label": "Normal",
+      "value": 100
+     },
+     {
+      "label": "Now",
+      "value": 30,
+      "highlight": true
+     }
+    ]
+   }
+  },
+  {
+   "line": 4,
+   "template": "headline",
+   "props": {
+    "kicker": "The Planning Desk",
+    "title": "Supply chain news every weekday",
+    "detail": "Apple Podcasts and Spotify"
+   }
+  }
+ ]
+}
