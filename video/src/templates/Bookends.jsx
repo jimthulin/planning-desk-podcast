@@ -60,7 +60,7 @@ export const TitleCard = ({week, episodeTitle, disclosure, credit}) => {
   );
 };
 
-export const OutroCard = ({credit, disclosure, site}) => {
+export const OutroCard = ({credit, disclosure, site, daily}) => {
   const frame = useCurrentFrame();
   const a = useEnter(4, 18);
   const b = useEnter(16, 18);
@@ -70,10 +70,10 @@ export const OutroCard = ({credit, disclosure, site}) => {
       <div style={{position: 'absolute', left: 110, top: 320, width: 860}}>
         <Brand p={a} />
         <div style={{fontFamily: HEAD, fontWeight: 700, color: C.ink, fontSize: 80, lineHeight: 1.05, marginTop: 56, letterSpacing: -1, opacity: b}}>
-          Supply chain planning, every weekday.
+          {daily ? 'Supply chain planning, every weekday.' : 'Supply chain planning, every Sunday.'}
         </div>
         <div style={{fontSize: 36, color: C.text, marginTop: 30, opacity: b, lineHeight: 1.35}}>
-          Week in review every Sunday.{site ? <><br /><span style={{color: C.blue, fontWeight: 700}}>{site}</span></> : null}
+          {daily ? 'Week in review every Sunday.' : 'Fifteen minutes on the week.'}{site ? <><br /><span style={{color: C.blue, fontWeight: 700}}>{site}</span></> : null}
         </div>
       </div>
       <Footer left={disclosure} right={credit} p={b} />

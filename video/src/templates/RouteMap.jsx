@@ -54,9 +54,25 @@ export const RouteMap = ({kicker, title, routes = [], points = [], pad = 8}) => 
       };
       return {...r, d: 'M' + pts.map((p) => `${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' L'), len, at};
     });
-    const projPoints = points.map((p) => ({...p, xy: projection([p.lon, p.lat])}));
+    // Place each label right of its pin, or left / below / above when it would hit an earlier label or pin.
+    const fs = v ? 34 : 30;
+    const placed = points.map((p) => { const [x, y] = projection([p.lon, p.lat]); return {x0: x - 16, y0: y - 16, x1: x + 16, y1: y + 16}; });
+    const hit = (r) => placed.some((q) => r.x0 < q.x1 && r.x1 > q.x0 && r.y0 < q.y1 && r.y1 > q.y0);
+    const projPoints = points.map((p) => {
+      const xy = projection([p.lon, p.lat]);
+      const w = p.name.length * fs * 0.58;
+      const opts = [
+        {x: xy[0] + 24, y: xy[1] + 10, anchor: 'start', r: {x0: xy[0] + 20, y0: xy[1] - fs * 0.75, x1: xy[0] + 28 + w, y1: xy[1] + fs * 0.4}},
+        {x: xy[0] - 24, y: xy[1] + 10, anchor: 'end', r: {x0: xy[0] - 28 - w, y0: xy[1] - fs * 0.75, x1: xy[0] - 20, y1: xy[1] + fs * 0.4}},
+        {x: xy[0], y: xy[1] + 50, anchor: 'middle', r: {x0: xy[0] - w / 2, y0: xy[1] + 20, x1: xy[0] + w / 2, y1: xy[1] + 58}},
+        {x: xy[0], y: xy[1] - 30, anchor: 'middle', r: {x0: xy[0] - w / 2, y0: xy[1] - 62, x1: xy[0] + w / 2, y1: xy[1] - 24}},
+      ];
+      const pick = opts.find((o) => !hit(o.r)) || opts[0];
+      placed.push(pick.r);
+      return {...p, xy, label: pick};
+    });
     return {countryPaths, projRoutes, projPoints};
-  }, [routes, points, pad, BOX, bare]);
+  }, [routes, points, pad, BOX, bare, v]);
 
   const mapIn = interpolate(frame, [0, 14], [0, 1], {extrapolateRight: 'clamp'});
 
@@ -109,7 +125,7 @@ export const RouteMap = ({kicker, title, routes = [], points = [], pad = 8}) => 
             <g key={i} opacity={x}>
               {p.alert && <circle cx={cx} cy={cy} r={14 + pulse * 46} fill="none" stroke={C.red} strokeWidth={4} strokeOpacity={1 - pulse} />}
               <circle cx={cx} cy={cy} r={13 * x} fill={color} stroke={C.ink} strokeWidth={4} />
-              <text x={cx + 24} y={cy + 10} fill={p.muted ? C.muted : C.white} fontSize={v ? 34 : 30} fontWeight={700}
+              <text x={p.label.x} y={p.label.y} textAnchor={p.label.anchor} fill={p.muted ? C.muted : C.white} fontSize={v ? 34 : 30} fontWeight={700}
                 fontFamily={HEAD} style={{paintOrder: 'stroke', stroke: C.paper, strokeWidth: 8, strokeLinejoin: 'round'}}>{p.name}</text>
             </g>
           );

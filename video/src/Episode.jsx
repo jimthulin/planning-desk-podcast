@@ -158,19 +158,24 @@ const usePart = (changed, leaving, dur, delay) => {
   return {opacity: o, transform: `translateY(${changed ? (1 - inP) * 14 : 0}px)`};
 };
 
-const Kpi = ({k, prev, accent, style}) => {
+const kpiText = (k, v) => {
+  const pre = k.prefix ? (/^[^\w\s]+$/.test(k.prefix.trim()) ? k.prefix.trim() : k.prefix.trim() + ' ') : '';
+  return `${pre}${fmt(v, k.decimals || 0)}${k.suffix || ''}`;
+};
+
+// All KPIs in a row share one size, set by the longest, so their labels line up.
+const Kpi = ({k, prev, accent, style, size}) => {
   const frame = useCurrentFrame();
   const from = prev && prev.suffix === k.suffix && prev.prefix === k.prefix ? prev.value : 0;
   const x = interpolate(frame, [4, 34], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   const e = 1 - Math.pow(1 - x, 4);
   const val = prev && prev.value === k.value ? k.value : from + (k.value - from) * e;
-  const pre = k.prefix ? (/^[^\w\s]+$/.test(k.prefix.trim()) ? k.prefix.trim() : k.prefix.trim() + ' ') : '';
-  const shown = `${pre}${fmt(val, k.decimals || 0)}${k.suffix || ''}`;
+  const shown = kpiText(k, val);
   return (
-    <div style={{width: 320, ...style}}>
-      <div style={{fontFamily: HEAD, fontWeight: 700, fontSize: shown.length > 7 ? 74 : 96, lineHeight: 1, letterSpacing: -1.5,
+    <div style={{minWidth: 270, maxWidth: 420, ...style}}>
+      <div style={{fontFamily: HEAD, fontWeight: 700, fontSize: size, lineHeight: 1, letterSpacing: -1.5,
         color: accent ? C.orange : C.ink, whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums'}}>{shown}</div>
-      <div style={{fontFamily: FONT, fontSize: 28, color: C.text, marginTop: 12, lineHeight: 1.25}}>{k.label}</div>
+      <div style={{fontFamily: FONT, fontSize: 28, color: C.text, marginTop: 12, lineHeight: 1.25, maxWidth: 300}}>{k.label}</div>
     </div>
   );
 };
@@ -190,6 +195,8 @@ const TextPanel = ({cue, prev, next, dur}) => {
   const kSame = (a, b) => a && b && a.value === b.value && a.label === b.label && a.suffix === b.suffix;
   const k0 = usePart(!kSame(kpis[0], pk[0]), !kSame(kpis[0], nk[0]), dur, 10);
   const k1 = usePart(!kSame(kpis[1], pk[1]), !kSame(kpis[1], nk[1]), dur, 14);
+  const longest = Math.max(0, ...kpis.map((k) => kpiText(k, k.value).length));
+  const kpiSize = longest > 9 ? 64 : longest > 6 ? 76 : 96;
   const hSize = full ? fit(cue.headline, [[40, 104], [80, 88], [0, 72]]) : fit(cue.headline, [[34, 76], [64, 64], [0, 54]]);
   return (
     <AbsoluteFill>
@@ -214,9 +221,9 @@ const TextPanel = ({cue, prev, next, dur}) => {
         )}
       </div>
       {kpis.length > 0 && (
-        <div style={{position: 'absolute', left: PANEL.x, top: 790, display: 'flex', gap: 10}}>
+        <div style={{position: 'absolute', left: PANEL.x, top: 790, display: 'flex', gap: 56}}>
           {kpis.map((k, i) => (
-            <Kpi key={i} k={k} prev={pk[i]} accent={k.accent ?? (kpis.length > 1 ? i === kpis.length - 1 : true)} style={i === 0 ? k0 : k1} />
+            <Kpi key={i} k={k} prev={pk[i]} size={kpiSize} accent={k.accent ?? (kpis.length > 1 ? i === kpis.length - 1 : true)} style={i === 0 ? k0 : k1} />
           ))}
         </div>
       )}
