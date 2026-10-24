@@ -230,6 +230,10 @@ def build_short(script: dict, stem: str, cfg: dict, voicer: "Voicer", work: Path
             t += mix["gap_between_lines_sec"]
         wav = sdir / f"line_{i:02d}.wav"
         to_wav(clip, wav, f"atempo={tempo}" if abs(tempo - 1.0) > 0.001 else None)
+        if mix.get("max_pause_sec"):
+            raw = wav.with_suffix(".raw.wav")
+            wav.rename(raw)
+            tighten(raw, wav, max_pause=float(mix["max_pause_sec"]), edge=float(mix.get("line_edge_sec", 0.04)))
         d = duration(wav)
         timeline.append({"start_sec": round(t, 2), "duration_sec": round(d, 2), "segment": "short",
                          "speaker": cfg["voices"][line["speaker"]]["name"], "text": line["text"]})
