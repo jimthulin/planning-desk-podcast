@@ -1,0 +1,207 @@
+{
+  "show": "The Planning Desk",
+  "episode_title": "Rhine Runs Dry, Suez Returns",
+  "week": "2026-W43",
+  "run_date": "2026-10-24",
+  "brief_file": "news-brief-2026-10-24-test.md",
+  "target_runtime_sec": 900,
+  "word_count": 2286,
+  "hosts": {
+    "F": {
+      "name": "Anna",
+      "voice": "female, senior news anchor, calm, quick, warm"
+    },
+    "M": {
+      "name": "Erik",
+      "voice": "male, senior news anchor, calm, quick, dry"
+    }
+  },
+  "segments": [
+    {
+      "id": "intro_music",
+      "type": "music",
+      "duration_sec": 10
+    },
+    {
+      "id": "cold_open",
+      "type": "speech",
+      "items": ["2026-W43-38", "2026-W43-39"],
+      "lines": [
+        {"speaker": "F", "text": "The Rhine is so low that barges bound for Kaub carry about a tenth of a normal load. And the rail line that should take the overflow is under works until December."},
+        {"speaker": "M", "text": "Out at sea, ships drift back to Suez while the Gulf stays nearly shut to box ships. This is The Planning Desk."}
+      ]
+    },
+    {
+      "id": "welcome",
+      "type": "speech",
+      "items": ["2026-W43-38", "2026-W43-39", "2026-W43-01", "2026-W43-31", "2026-W43-32", "2026-W43-40"],
+      "lines": [
+        {"speaker": "F", "text": "Welcome to The Planning Desk, your fifteen minutes on supply chain planning and design, from the Nordics, DACH and beyond. I'm Anna."},
+        {"speaker": "M", "text": "And I'm Erik."},
+        {"speaker": "F", "text": "Quick note: this show is made with A I. A I agents gather the news, and our voices are synthetic. Three headlines this week. Drought pushes the Rhine to record lows. Carriers head back to Suez as Hormuz gets worse. And Cisco shows what a planning agent does with a planner's week."},
+        {"speaker": "M", "text": "Plus a merger hangover at DSV, a slow warehouse ramp in Sweden, and new trade curbs between Brussels and Beijing."}
+      ]
+    },
+    {
+      "id": "lead_stories",
+      "type": "speech",
+      "items": ["2026-W43-38", "2026-W43-39", "2026-W43-V3", "2026-W43-01", "2026-W43-V2"],
+      "lines": [
+        {"speaker": "F", "text": "First, the Rhine. Drought has pushed water levels to record lows. Barges from Rotterdam bound for Kaub now carry about two hundred and eighty tonnes. A standard load is two and a half thousand. That's barely a tenth."},
+        {"speaker": "M", "text": "So the freight moves to rail?"},
+        {"speaker": "F", "text": "It tries to. But the right-bank line between Troisdorf and Wiesbaden is under works until the twelfth of December. V T G says there's little reserve capacity left."},
+        {"speaker": "M", "text": "And Switzerland sits at the far end of that river."},
+        {"speaker": "F", "text": "Right. Swiss deliveries of diesel, heating oil, coal and cocoa are restricted. Switzerland has released petroleum and jet fuel reserves. And Swiss barge rates hit a record."},
+        {"speaker": "M", "text": "Low water is a season now, not a surprise. If your network leans on the Rhine, line up rail and road fallback, and move stock forward before the levels drop."},
+        {"speaker": "F", "text": "Our second lead is at sea. Freightos says carriers are steadily returning to Suez, despite the Houthi risk. It expects a full recovery in the first quarter of next year."},
+        {"speaker": "M", "text": "Which means more ships on the route, and shorter trips."},
+        {"speaker": "F", "text": "More effective capacity, and Freightos sees a risk of overcapacity next year. For now, rates are rising. Freightos has Asia to North Europe up six percent, to about three thousand four hundred dollars per forty-foot box."},
+        {"speaker": "M", "text": "And the Gulf?"},
+        {"speaker": "F", "text": "Going the other way. Iran has stepped up attacks around Hormuz. The week before, a projectile sank a container ship. Drewry counted only two containerships entering the Gulf in week forty-two, down from five."},
+        {"speaker": "M", "text": "Two ships in a whole week. And Suez?"},
+        {"speaker": "F", "text": "Suez transits edged up to fifty-five, from fifty-four. Two lanes moving in opposite directions."},
+        {"speaker": "M", "text": "Then plan for both. Asia to Europe lead times may shorten by early next year, so build a lead-time and rate reset into your twenty twenty-seven parameters. And treat the Gulf as a separate risk."},
+        {"speaker": "F", "text": "Road freight has its own warning. Adrian Gonzalez of Adelante S C M wrote on his Talking Logistics blog that shippers should prepare for higher truck rates in twenty twenty-seven."},
+        {"speaker": "M", "text": "Why?"},
+        {"speaker": "F", "text": "He points to cost pressure from diesel, insurance and driver recruiting. And he says shrinking capacity is moving pricing power back to carriers."},
+        {"speaker": "M", "text": "So next year's transport budget needs room for that. Don't plan on cheap trucks in twenty twenty-seven. Third lead, and it's A I."},
+        {"speaker": "F", "text": "At the A S C M CHAINge conference, Cisco's head of supply chain transformation, Joe McMorrow, presented an A I agent now in production. Forty-two demand planners use it."},
+        {"speaker": "M", "text": "What does it actually do?"},
+        {"speaker": "F", "text": "It automates forecast versus actual analysis, the routine check of plan against what really happened. Planners can ask follow-up questions in a chat. Cisco says each planner saves at least six hours a week."},
+        {"speaker": "M", "text": "And did Cisco cut any planners?"},
+        {"speaker": "F", "text": "No. Demand-planning headcount stays the same. The time goes into planning insight and more work with sales. The article gives no accuracy or financial figures."},
+        {"speaker": "M", "text": "That's a benchmark worth copying. The payback is planner time moved from routine variance checks to judgement. And it rests on business knowledge, data and human review behind the agent."},
+        {"speaker": "F", "text": "Glenn Richey of Auburn University made a similar point on the Supply Chain Now podcast this month. In his words, \"AI magnifies the foundation that's underneath it, right? It doesn't fix bad visibility.\""},
+        {"speaker": "M", "text": "He adds that spotting a problem isn't solving it. Alerts alone don't change orders, allocations or transport plans."},
+        {"speaker": "F", "text": "Fair point. Erik, the A I and tech desk is yours."}
+      ]
+    },
+    {
+      "id": "ai_tech",
+      "type": "speech",
+      "items": ["2026-W43-05", "2026-W43-04", "2026-W43-02", "2026-W43-03", "2026-W43-21", "2026-W43-07"],
+      "lines": [
+        {"speaker": "M", "text": "Starting with people. A S C M and the Digital Supply Chain Institute have a new report out, called The People Paradox in Supply Chain A I Integration."},
+        {"speaker": "F", "text": "What does it find?"},
+        {"speaker": "M", "text": "Eighty-three percent of supply chain leaders say their workers can't yet use A I well."},
+        {"speaker": "F", "text": "And are people worried about their jobs?"},
+        {"speaker": "M", "text": "Ninety-one percent plan to use A I to support people. Only seven percent expect it to replace them. The sample is small, though. About a hundred and forty responses, a hundred and seven analysed, mostly North American."},
+        {"speaker": "F", "text": "So the brake on agentic planning is change management and upskilling, more than the tools."},
+        {"speaker": "M", "text": "And the money side. Sal Arora, who co-leads McKinsey's operations practice, cites a McKinsey survey where only about six percent of respondents credit A I with at least five percent of operating profit."},
+        {"speaker": "F", "text": "So who's getting it right?"},
+        {"speaker": "M", "text": "Research from M I T and McKinsey says the leaders' impact multiple rose from two point seven times in twenty twenty-one to four point seven times this year. Where workflows were redesigned end to end, Arora reports supply chain agents cutting cost of goods by four to seven percent."},
+        {"speaker": "F", "text": "Then tie the planning A I business case to the P and L and a redesigned workflow, not to a count of use cases."},
+        {"speaker": "M", "text": "Next, chips. The Semiconductor Industry Association mapped two hundred tier one equipment and materials inputs, across one hundred categories, plus the sub-tier inputs behind them."},
+        {"speaker": "F", "text": "Where do they come from?"},
+        {"speaker": "M", "text": "U S chipmaking gets about ninety-five percent of tier one inputs from domestic, European or Japanese suppliers."},
+        {"speaker": "F", "text": "Sounds well spread."},
+        {"speaker": "M", "text": "At tier one. But those suppliers lean on overseas sub-tier networks. About half the categories rate high or medium vulnerability. Rare earths are the main worry, and some parts could take a decade or more to build at home."},
+        {"speaker": "F", "text": "So tier one dual sourcing can hide concentration further up. If your bill of materials is heavy on electronics, map deeper."},
+        {"speaker": "M", "text": "Chips are also getting harder to buy, and A I is part of the reason. At AdvaMed's MedTech Conference, device makers said they face another chip crunch this year, as A I infrastructure competes for supply."},
+        {"speaker": "F", "text": "How are they handling it?"},
+        {"speaker": "M", "text": "Zoll Medical stopped buying boards through contract manufacturers. It now works directly with chip suppliers, and holds extra inventory to buy lead time. Solventum, with thirty thousand S K Us, protects life-saving products first."},
+        {"speaker": "F", "text": "And Vantive recommends integrated business planning, I B P, with regional inventory owners. For low-volume buyers, A I demand is a real allocation risk. Tier your inventory policy by S K U, and get closer to the chipmakers."},
+        {"speaker": "M", "text": "Now digital twins. Optilogic says a supply chain twin built on a company's existing data, without replacing its systems, can let leaders run many tariff scenarios in one morning."},
+        {"speaker": "F", "text": "Built once, then shelved?"},
+        {"speaker": "M", "text": "Optilogic says no. It says the twin keeps checking its assumptions after a decision, and reruns scenarios when conditions change. Its Ada A I system compares the options with optimisation and simulation."},
+        {"speaker": "F", "text": "If network design becomes a model that keeps running, teams have to staff and maintain it that way."},
+        {"speaker": "M", "text": "Last, robots in Ingolstadt. Audi is testing three humanoid robots from Munich-based Agile Robots at the Audi Production Lab. They pick mixed components and sequence them for assembly. People do that by hand today."},
+        {"speaker": "F", "text": "What's behind the robots?"},
+        {"speaker": "M", "text": "Dassault Systèmes' DELMIA virtual twin and NVIDIA's Jetson Thor. Audi says its demand-driven material supply handles about a million picks a day. No completion date is set."},
+        {"speaker": "F", "text": "Virtual twins that link material planning to robots on the line are now in plant trials in German automotive. Erik, let's stay in the region."}
+      ]
+    },
+    {
+      "id": "nordics_dach",
+      "type": "speech",
+      "items": ["2026-W43-31", "2026-W43-32", "2026-W43-34"],
+      "lines": [
+        {"speaker": "M", "text": "Denmark first, and a merger hangover. DSV's third quarter revenue rose to about eighty-one billion Danish kroner. Operating profit before special items came in at six point six billion."},
+        {"speaker": "F", "text": "But road had a rough quarter."},
+        {"speaker": "M", "text": "It did. Road operating profit fell thirty-five percent, to about five hundred and twenty-six million kroner. Integrating Schenker's road network caused service disruptions that cut productivity and volumes."},
+        {"speaker": "F", "text": "Is it fixed?"},
+        {"speaker": "M", "text": "DSV says road was back to normal by the end of September. It still targets about nine billion kroner a year in Schenker synergies, but some now slip into twenty twenty-seven. Full-year guidance narrowed to twenty-four to twenty-five billion kroner."},
+        {"speaker": "F", "text": "A few overloaded nodes dragged down a whole network. If your carrier is in the middle of a merger, stress-test its integration plan before peak season."},
+        {"speaker": "M", "text": "To Sweden. Online pharmacy Meds moved from Västberga to a new logistics centre in Eskilstuna in August. It has three times the capacity."},
+        {"speaker": "F", "text": "How did the ramp-up go?"},
+        {"speaker": "M", "text": "Slower than planned. Staff training ran long, and that hurt sales and delivery times. Preliminary figures put the revenue hit at about fifty million kronor, against a forecast of twenty-five. The profit hit was about nine million, against six."},
+        {"speaker": "F", "text": "Delivery times normalised this month, and the full report is due on the sixth of November. People and process set the go-live curve, not the automation. Put a realistic one in the business case."},
+        {"speaker": "M", "text": "And Germany. Amazon plans to invest around sixteen billion euros there next year. About four point eight billion goes into cloud and A I capacity, mainly around Frankfurt."},
+        {"speaker": "F", "text": "And on the logistics side?"},
+        {"speaker": "M", "text": "A new site is going up in Könnern, in Saxony-Anhalt. Upgrades with more robotics at Bad Hersfeld, Dortmund and Werne finish next year. Amazon says about three thousand logistics jobs are being created."},
+        {"speaker": "F", "text": "More capacity in eastern Germany keeps pushing up delivery-speed expectations for German retail networks. Plan your own delivery promises with that in mind."}
+      ]
+    },
+    {
+      "id": "market_moves",
+      "type": "speech",
+      "items": ["2026-W43-35", "2026-W43-06"],
+      "lines": [
+        {"speaker": "F", "text": "Market moves. SAP's quarterly revenue passed ten billion euros for the first time. Cloud revenue rose twenty-six percent, and so did the current cloud backlog."},
+        {"speaker": "M", "text": "What's driving it?"},
+        {"speaker": "F", "text": "C E O Christian Klein named A I, including Joule, as the main driver of cloud migration. Operating profit rose eighteen percent, to about three billion euros, and the full-year outlook holds. For many DACH and Nordic firms, that migration sets the timeline for planning moves, I B P included."},
+        {"speaker": "M", "text": "And a big funding round."},
+        {"speaker": "F", "text": "Pigment, the French A I planning platform, raised two hundred and fifty million dollars at a two point three billion dollar valuation, with NVIDIA planning to invest. Pigment says it passed a hundred million dollars in annual recurring revenue. The money goes mainly to its Graphite engine and research. Rounds this big show where investors think planning software is heading."}
+      ]
+    },
+    {
+      "id": "macro_trade",
+      "type": "speech",
+      "items": ["2026-W43-40"],
+      "lines": [
+        {"speaker": "F", "text": "Trade. At their October summit, E U leaders backed stronger trade defences and less dependence on China, according to MERICS. Reuters reports the E U will propose import curbs on more Chinese sectors."},
+        {"speaker": "M", "text": "And Beijing's answer?"},
+        {"speaker": "F", "text": "China proposed adding forty technologies to its export-control list, twenty-three of them A I related. Consultation closes on the fifteenth of November. Revised drone export controls take effect on the eighteenth."},
+        {"speaker": "M", "text": "Analysts see possible retaliation through agri-food, luxury goods or rare earths. If you buy Chinese inputs in chemicals, machinery or electronics, model duty and supply-access scenarios before the E U curbs land."},
+        {"speaker": "F", "text": "First date to watch: the fifteenth of November."}
+      ]
+    },
+    {
+      "id": "events_ahead",
+      "type": "speech",
+      "items": ["2026-W43-E3", "2026-W43-E4", "2026-W43-E8", "2026-W43-E10"],
+      "lines": [
+        {"speaker": "F", "text": "Events ahead. Gartner's Supply Chain Planning Summit runs in Denver on the second and third of November. It's the main analyst event for heads of planning, so expect new research on A I in planning."},
+        {"speaker": "M", "text": "Anything closer to home?"},
+        {"speaker": "F", "text": "Logistik and Transport fills Svenska Mässan in Gothenburg on the third and fourth of November. It's Sweden's main logistics fair this autumn, and a meeting point for Nordic supply chain teams."},
+        {"speaker": "M", "text": "And in Germany?"},
+        {"speaker": "F", "text": "TFEST twenty-six, the supply chain transformation event, is in Berlin on the first and second of December. It's a senior European event on A I adoption, geopolitics and talent, with an Optilon keynote and roundtables."},
+        {"speaker": "M", "text": "Anything before the year is out?"},
+        {"speaker": "F", "text": "B M E, the German procurement and logistics association, holds its Solution Day for DACH supply chain leaders on the fifteenth of December."}
+      ]
+    },
+    {
+      "id": "quick_hits",
+      "type": "speech",
+      "items": ["2026-W43-36", "2026-W43-37", "2026-W43-33", "2026-W43-41", "2026-W43-V1"],
+      "lines": [
+        {"speaker": "M", "text": "Quick hits. Levi's move to a third-party-run warehouse in Ohio has slipped again. The C E O now expects the benefits from twenty twenty-seven."},
+        {"speaker": "F", "text": "A fire at one Levi's warehouse disrupted peak weeks, and a company filing warns of possible shipping delays and higher costs."},
+        {"speaker": "M", "text": "Nestlé will close its plant in Solon, Ohio, by the end of twenty twenty-seven, and move foodservice pouches to South Carolina."},
+        {"speaker": "F", "text": "It has company. PepsiCo, Tyson, JBS, Danone and Mars have all announced plant closures this year."},
+        {"speaker": "M", "text": "Medtech distributor Onemed is merging three regional warehouses into one forty-five thousand square metre centre in Gothenburg. Eighty of its one hundred and eighty staff have been given notice."},
+        {"speaker": "F", "text": "A B V L research series finds crisis routines can turn rigid. One example: backup routes that depended on the same infrastructure as the main ones."},
+        {"speaker": "M", "text": "And Lora Cecere of Supply Chain Insights wrote on her blog this month that a two percent gain in forecast accuracy is largely meaningless. She says mature planning asks whether the plan is feasible and reliable, with the forecast as one input."}
+      ]
+    },
+    {
+      "id": "sign_off",
+      "type": "speech",
+      "items": ["2026-W43-38", "2026-W43-39", "2026-W43-01"],
+      "lines": [
+        {"speaker": "F", "text": "That's the desk for this week. Low rivers, busy straits, and an A I agent that gives planners their time back instead of taking their jobs."},
+        {"speaker": "M", "text": "Next week, we'll see whether rates hold as more ships return to Suez. I'm Erik."},
+        {"speaker": "F", "text": "And I'm Anna. The Planning Desk is made in partnership with Optilon. See you next Sunday."}
+      ]
+    },
+    {
+      "id": "outro_music",
+      "type": "music",
+      "duration_sec": 10
+    }
+  ],
+  "show_notes": {
+    "summary": "Drought pushes the Rhine to record lows just as German rail works squeeze the overflow. Carriers drift back to Suez while Hormuz attacks keep box ships out of the Gulf, and Cisco shows a demand-planning AI agent saving planners six hours a week. Plus DSV's Schenker hangover, a slow warehouse ramp at Meds, new EU and China trade curbs, and SAP and Pigment in market moves.",
+    "sources": []
+  }
+}
