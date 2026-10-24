@@ -1,0 +1,33 @@
+name: Check social accounts
+
+# Confirms the social media tokens work without posting anything.
+on:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+      INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+    steps:
+      - name: Instagram
+        if: ${{ env.INSTAGRAM_TOKEN != '' }}
+        shell: python
+        run: |
+          import json, os, urllib.request, urllib.error
+          tok, uid = os.environ["INSTAGRAM_TOKEN"], os.environ.get("INSTAGRAM_USER_ID", "")
+          def get(path):
+              req = urllib.request.Request(f"https://graph.instagram.com/v26.0/{path}", headers={"Authorization": f"Bearer {tok}"})
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      return json.loads(r.read())
+              except urllib.error.HTTPError as e:
+                  raise SystemExit(f"{path}: HTTP {e.code} {e.read().decode()[:400]}")
+          me = get("me?fields=user_id,username,account_type")
+          print(f"Token belongs to @{me.get('username')} ({me.get('account_type')}), user_id {me.get('user_id')}")
+          if uid and str(me.get("user_id")) != uid.strip():
+              print(f"::warning::INSTAGRAM_USER_ID secret is {uid.strip()} but the token's user_id is {me.get('user_id')}")
+          lim = get(f"{me.get('user_id')}/content_publishing_limit?fields=quota_usage,config")
+          print(f"Publishing permission OK. Quota: {json.dumps(lim.get('data', lim))}")
