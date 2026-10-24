@@ -11,6 +11,8 @@ jobs:
     env:
       INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
       INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+      LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_TOKEN }}
+      LINKEDIN_TOKEN_SET_ON: ${{ vars.LINKEDIN_TOKEN_SET_ON }}
     steps:
       - name: Instagram
         if: ${{ env.INSTAGRAM_TOKEN != '' }}
@@ -31,3 +33,23 @@ jobs:
               print(f"::warning::INSTAGRAM_USER_ID secret is {uid.strip()} but the token's user_id is {me.get('user_id')}")
           lim = get(f"{me.get('user_id')}/content_publishing_limit?fields=quota_usage,config")
           print(f"Publishing permission OK. Quota: {json.dumps(lim.get('data', lim))}")
+
+      - name: LinkedIn
+        if: ${{ env.LINKEDIN_TOKEN != '' }}
+        shell: python
+        run: |
+          import json, os, urllib.request, urllib.error
+          from datetime import date
+          req = urllib.request.Request("https://api.linkedin.com/v2/userinfo", headers={"Authorization": f"Bearer {os.environ['LINKEDIN_TOKEN']}"})
+          try:
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  me = json.loads(r.read())
+          except urllib.error.HTTPError as e:
+              raise SystemExit(f"userinfo: HTTP {e.code} {e.read().decode()[:400]}")
+          print(f"Token belongs to {me.get('name')} (member id present: {bool(me.get('sub'))})")
+          set_on = os.environ.get("LINKEDIN_TOKEN_SET_ON", "")
+          if not set_on:
+              print("::warning::LINKEDIN_TOKEN_SET_ON variable is missing")
+          else:
+              age = (date.today() - date.fromisoformat(set_on.strip())).days
+              print(f"Token set {age} days ago; it expires after 60.")
