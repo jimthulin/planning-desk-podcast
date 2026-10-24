@@ -23,7 +23,8 @@
     "spotify_url": "",
     "audio_base_url": "https://github.com/jimthulin/planning-desk-podcast/releases/download/",
     "linkedin_url": "https://www.linkedin.com/company/the-planning-desk/",
-    "instagram_url": "https://www.instagram.com/theplanningdesk.podcast/"
+    "instagram_url": "https://www.instagram.com/theplanningdesk.podcast/",
+    "newsletter_url": "https://buttondown.com/theplanningdesk"
   },
   "voices": {
     "F": {
