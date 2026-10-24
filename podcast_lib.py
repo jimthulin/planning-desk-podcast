@@ -76,6 +76,58 @@ def to_wav(src: Path, dst: Path, filters: str | None = None) -> None:
     run(cmd)
 
 
+def tighten(src: Path, dst: Path, max_pause: float = 0.28, edge: float = 0.04, threshold_db: float = -42.0) -> None:
+    """Trim a voiced line's leading and trailing silence to `edge` seconds and shorten any pause
+    inside it to at most `max_pause`, so the hosts never seem to wait. Expects 16-bit PCM WAV."""
+    import wave
+    import numpy as np
+
+    with wave.open(str(src), "rb") as w:
+        params = w.getparams()
+        data = np.frombuffer(w.readframes(params.nframes), dtype=np.int16).reshape(-1, params.nchannels)
+    rate = params.framerate
+    hop = max(1, rate // 100)  # 10 ms
+    n = len(data) // hop
+    if n < 3:
+        dst.write_bytes(src.read_bytes())
+        return
+    mono = data[: n * hop].astype(np.float32).mean(axis=1).reshape(n, hop)
+    rms = np.sqrt((mono ** 2).mean(axis=1)) / 32768.0
+    loud = 20 * np.log10(np.maximum(rms, 1e-9)) > threshold_db
+    if not loud.any():
+        dst.write_bytes(src.read_bytes())
+        return
+    first, last = int(np.argmax(loud)), int(n - 1 - np.argmax(loud[::-1]))
+    e, keep = int(round(edge * 100)), int(round(max_pause * 100))
+    pieces, i, start = [], first, max(0, first - e)
+    while i <= last:
+        if loud[i]:
+            i += 1
+            continue
+        j = i
+        while j <= last and not loud[j]:
+            j += 1
+        if j - i > keep:  # a long pause: keep its first and last halves only
+            pieces.append((start * hop, (i + keep // 2) * hop))
+            start = j - (keep - keep // 2)
+        i = j
+    pieces.append((start * hop, min(len(data), (last + 1 + e) * hop)))
+    fade = max(1, rate // 333)  # 3 ms fades at each cut, so no clicks
+    out = []
+    for a, b in pieces:
+        seg = data[a:b].astype(np.float32)
+        k = min(fade, len(seg) // 2)
+        if k:
+            ramp = np.linspace(0, 1, k, dtype=np.float32)[:, None]
+            seg[:k] *= ramp
+            seg[-k:] *= ramp[::-1]
+        out.append(seg)
+    joined = np.clip(np.concatenate(out), -32768, 32767).astype(np.int16)
+    with wave.open(str(dst), "wb") as w:
+        w.setparams(params)
+        w.writeframes(joined.tobytes())
+
+
 def silence(dst: Path, seconds: float) -> None:
     run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", "anullsrc=r=44100:cl=stereo",
          "-t", f"{seconds:.3f}", "-c:a", "pcm_s16le", str(dst)])

@@ -51,8 +51,10 @@
     "duration_sec": 10
   },
   "mix": {
-    "gap_between_lines_sec": 0.15,
-    "gap_between_segments_sec": 0.45,
+    "gap_between_lines_sec": 0.18,
+    "max_pause_sec": 0.28,
+    "line_edge_sec": 0.04,
+    "gap_between_segments_sec": 0.42,
     "gap_after_intro_sec": 0.15,
     "gap_before_outro_sec": 0.4,
     "intro_fade_out_sec": 0.8,
