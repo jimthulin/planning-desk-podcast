@@ -80,7 +80,7 @@ jobs:
           fi
           test -f "$S" || { echo "Script not found: $S"; exit 1; }
           STEM=$(basename "$S" .json); STEM=${STEM#script-}
-          FORMAT=$(python -c "import json,sys;print('daily' if json.load(open(sys.argv[1])).get('format')=='daily' else 'weekly')" "$S")
+          FORMAT=$(python -c "import json,sys;f=json.load(open(sys.argv[1])).get('format');print(f if f in ('daily','saturday') else 'weekly')" "$S")
           TEST=false; case "$STEM" in *-test) TEST=true;; esac
           echo "script=$S" >> "$GITHUB_OUTPUT"
           echo "stem=$STEM" >> "$GITHUB_OUTPUT"
@@ -157,9 +157,9 @@ jobs:
           npm ci --no-audit --no-fund
           npx remotion browser ensure
 
-      # Sunday: the full 16:9 episode for YouTube.
+      # Sunday and Saturday: the full 16:9 episode for YouTube.
       - name: Render the episode video
-        if: ${{ inputs.fake != true && inputs.video != false && steps.pick.outputs.format == 'weekly' }}
+        if: ${{ inputs.fake != true && inputs.video != false && steps.pick.outputs.format != 'daily' }}
         timeout-minutes: 75
         run: |
           STEM="${{ steps.pick.outputs.stem }}"
@@ -170,7 +170,7 @@ jobs:
           gh release upload "episode-$STEM" "build/out/planning-desk-$STEM.mp4" --clobber
 
       - name: Upload the episode to YouTube
-        if: ${{ inputs.fake != true && inputs.video != false && steps.pick.outputs.format == 'weekly' && env.YOUTUBE_REFRESH_TOKEN != '' && (inputs.youtube_private_test == true || steps.pick.outputs.test != 'true') }}
+        if: ${{ inputs.fake != true && inputs.video != false && steps.pick.outputs.format != 'daily' && env.YOUTUBE_REFRESH_TOKEN != '' && (inputs.youtube_private_test == true || steps.pick.outputs.test != 'true') }}
         env:
           YOUTUBE_PRIVACY: ${{ inputs.youtube_private_test == true && 'private' || '' }}
         run: |
@@ -188,9 +188,9 @@ jobs:
         continue-on-error: true
         run: python newsletter.py "${{ steps.pick.outputs.stem }}"
 
-      # Weekdays: the 9:16 Short for YouTube Shorts, Instagram Reels and the LinkedIn Page.
+      # Weekdays and Saturday: the 9:16 Short for YouTube Shorts, Instagram Reels and the LinkedIn Page.
       - name: Render the Short
-        if: ${{ inputs.fake != true && inputs.video != false && steps.pick.outputs.format == 'daily' && hashFiles(format('build/out/planning-desk-{0}-short.mp3', steps.pick.outputs.stem)) != '' }}
+        if: ${{ inputs.fake != true && inputs.video != false && steps.pick.outputs.format != 'weekly' && hashFiles(format('build/out/planning-desk-{0}-short.mp3', steps.pick.outputs.stem)) != '' }}
         id: short
         timeout-minutes: 20
         run: |

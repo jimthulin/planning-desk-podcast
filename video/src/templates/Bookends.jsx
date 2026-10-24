@@ -60,7 +60,14 @@ export const TitleCard = ({week, episodeTitle, disclosure, credit}) => {
   );
 };
 
-export const OutroCard = ({credit, disclosure, site, daily}) => {
+const OUTRO = {
+  daily: ['Supply chain planning, every weekday.', 'Week in review every Sunday.'],
+  saturday: ['A book worth your time, every Saturday.', 'News every weekday, the week in review on Sunday.'],
+  weekly: ['Supply chain planning, every Sunday.', 'Fifteen minutes on the week.'],
+};
+
+export const OutroCard = ({credit, disclosure, site, daily, format}) => {
+  const [big, small] = OUTRO[format === 'saturday' ? 'saturday' : daily ? 'daily' : 'weekly'];
   const frame = useCurrentFrame();
   const a = useEnter(4, 18);
   const b = useEnter(16, 18);
@@ -70,10 +77,10 @@ export const OutroCard = ({credit, disclosure, site, daily}) => {
       <div style={{position: 'absolute', left: 110, top: 320, width: 860}}>
         <Brand p={a} />
         <div style={{fontFamily: HEAD, fontWeight: 700, color: C.ink, fontSize: 80, lineHeight: 1.05, marginTop: 56, letterSpacing: -1, opacity: b}}>
-          {daily ? 'Supply chain planning, every weekday.' : 'Supply chain planning, every Sunday.'}
+          {big}
         </div>
         <div style={{fontSize: 36, color: C.text, marginTop: 30, opacity: b, lineHeight: 1.35}}>
-          {daily ? 'Week in review every Sunday.' : 'Fifteen minutes on the week.'}{site ? <><br /><span style={{color: C.blue, fontWeight: 700}}>{site}</span></> : null}
+          {small}{site ? <><br /><span style={{color: C.blue, fontWeight: 700}}>{site}</span></> : null}
         </div>
       </div>
       <Footer left={disclosure} right={credit} p={b} />

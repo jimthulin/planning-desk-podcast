@@ -36,6 +36,9 @@ SEGMENT_NAMES = {
     "market_moves": "Market moves", "use_cases": "Use cases", "macro": "Macro and trade", "numbers": "The numbers",
     "events_ahead": "Events ahead", "quick_hits": "Quick hits", "sign_off": "Sign-off",
     "week_threads": "The week's threads", "voices": "Expert voices", "week_ahead": "The week ahead",
+    "book_open": "Opening", "book_intro": "Today's book", "book_context": "The book and its author",
+    "big_ideas": "The big ideas", "for_planners": "Why it matters now", "reading_guide": "How to read it",
+    "shelf": "Also on the shelf", "book_sign_off": "Sign-off",
 }
 
 
@@ -60,6 +63,8 @@ def audio_url(pod: dict, e: dict) -> str:
 
 def page_url(pod: dict, e: dict) -> str:
     return f"{base_url(pod)}e/{e['stem']}.html"
+
+KIND_LABELS = {"daily": "Daily briefing", "saturday": "Book of the week", "weekly": "Week in review"}
 
 
 def episode_notes(script: dict, pod: dict, page: str) -> tuple[str, str]:
@@ -135,7 +140,7 @@ def write_episode_page(cfg: dict, e: dict, script: dict, meta: dict) -> None:
     pod = cfg["podcast"]
     PAGES.mkdir(parents=True, exist_ok=True)
     when = datetime.fromisoformat(e["pub_date"]).strftime("%A %-d %B %Y")
-    kind = "Daily briefing" if e["format"] == "daily" else "Week in review"
+    kind = KIND_LABELS.get(e["format"], "Week in review")
     rows, last_seg = [], None
     for t in meta.get("timeline", []):
         if t["segment"] != last_seg:
@@ -244,7 +249,7 @@ def build_index(cfg: dict, registry: list[dict]) -> None:
     eps = []
     for e in sorted(registry, key=lambda x: x["pub_date"], reverse=True)[:60]:
         when = datetime.fromisoformat(e["pub_date"]).strftime("%-d %B %Y")
-        kind = "Daily" if e.get("format") == "daily" else "Week in review"
+        kind = {"daily": "Daily", "saturday": "Book of the week"}.get(e.get("format"), "Week in review")
         eps.append(f"""<article><p class="meta">{kind} · {when} · {e['duration_sec'] // 60} min</p>
 <h2><a href="e/{e['stem']}.html">{html.escape(e['title'])}</a></h2>
 <audio controls preload="none" src="{html.escape(audio_url(pod, e), quote=True)}"></audio>

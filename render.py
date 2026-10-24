@@ -6,8 +6,9 @@ re-runs don't spend credits twice), then intro music, dialogue and outro music a
 stitched with ffmpeg, loudness-normalised and written as an MP3 with a transcript and
 a timeline next to it.
 
-Daily scripts ("format": "daily") get 5-second music at each end and, when the script has a
-"short" block, a separate vertical-video soundtrack (planning-desk-<stem>-short.mp3/json).
+Daily scripts ("format": "daily") and the Saturday book episode ("format": "saturday") get shorter
+music at each end (formats.<format>.jingle_sec) and, when the script has a "short" block, a separate
+vertical-video soundtrack (planning-desk-<stem>-short.mp3/json).
 
 Usage:
   python render.py episodes/scripts/script-2026-10-23.json
@@ -29,13 +30,17 @@ CACHE = BUILD / "cache"
 
 
 def episode_format(script: dict) -> str:
-    return "daily" if script.get("format") == "daily" else "weekly"
+    fmt = script.get("format")
+    return fmt if fmt in ("daily", "saturday") else "weekly"
 
 
 def episode_title(cfg: dict, script: dict) -> str:
-    """Feed title without the show name: 'Week 44: ...' or 'Mon 2 Nov: ...'."""
+    """Feed title without the show name: 'Week 44: ...', 'Mon 2 Nov: ...' or 'Book of the week: ...'."""
     from datetime import date
     name = (script.get("episode_title") or "").strip()
+    if episode_format(script) == "saturday":
+        prefix = cfg.get("formats", {}).get("saturday", {}).get("title_prefix", "Book of the week")
+        return f"{prefix}: {name}".strip(": ")
     if episode_format(script) == "daily":
         d = date.fromisoformat(script.get("run_date"))
         return f"{d.strftime('%a')} {d.day} {d.strftime('%b')}: {name}".strip(": ")
@@ -192,7 +197,7 @@ def build_episode(script_path: Path, fake: bool) -> Path:
 
     print(f"Done: {mp3.relative_to(ROOT)}  {int(total // 60)}:{int(total % 60):02d}  ({title})")
 
-    if fmt == "daily" and (script.get("short") or {}).get("lines"):
+    if fmt in ("daily", "saturday") and (script.get("short") or {}).get("lines"):
         build_short(script, stem, cfg, voicer, work, out_dir)
     return mp3
 
@@ -251,7 +256,8 @@ def build_short(script: dict, stem: str, cfg: dict, voicer: "Voicer", work: Path
          "-ar", "44100", "-ac", "2", "-c:a", "libmp3lame", "-b:a", mix["mp3_bitrate"], str(mp3)])
     total = duration(mp3)
     (out_dir / f"planning-desk-{stem}-short.json").write_text(json.dumps({
-        "title": short.get("title") or script.get("episode_title"), "run_date": script.get("run_date"),
+        "title": short.get("title") or script.get("episode_title"), "format": episode_format(script),
+        "run_date": script.get("run_date"),
         "duration_sec": round(total, 1), "end_card_sec": round(end_card_at, 2), "timeline": timeline},
         indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"Done: {mp3.relative_to(ROOT)}  {total:.1f}s")

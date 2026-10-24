@@ -48,6 +48,14 @@ export const SEGMENT_LABELS = {
   voices: 'Expert voices',
   week_ahead: 'The week ahead',
   sign_off: 'Sign-off',
+  book_open: 'Book of the week',
+  book_intro: "Today's book",
+  book_context: 'The book',
+  big_ideas: 'The big ideas',
+  for_planners: 'Why it matters now',
+  reading_guide: 'How to read it',
+  shelf: 'Also on the shelf',
+  book_sign_off: 'Sign-off',
 };
 
 export const segmentLabel = (id) =>

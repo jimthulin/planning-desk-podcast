@@ -69,7 +69,8 @@ const titleParts = (meta.title || '').split(': ');
 const dateLabel = (() => {
   if (!meta.run_date) return '';
   const d = new Date(`${meta.run_date}T12:00:00Z`);
-  return `Daily · ${d.toLocaleDateString('en-GB', {weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC'})}`;
+  const label = meta.format === 'saturday' ? (config.formats?.saturday?.title_prefix || 'Book of the week') : 'Daily';
+  return `${label} · ${d.toLocaleDateString('en-GB', {weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC'})}`;
 })();
 const shortProps = {
   show: config.show,
@@ -79,12 +80,13 @@ const shortProps = {
   lines: meta.timeline,
   cues,
   audioFile,
-  cta: config.short?.cta || 'Every weekday on Apple Podcasts and Spotify',
+  cta: config.formats?.[meta.format]?.short_cta || config.short?.cta || 'Every weekday on Apple Podcasts and Spotify',
 };
 const longProps = {
   show: config.show,
   week: (() => {
     const d = meta.run_date ? new Date(`${meta.run_date}T12:00:00Z`).toLocaleDateString('en-GB', {weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC'}) : '';
+    if (meta.format === 'saturday') return `${config.formats?.saturday?.title_prefix || 'Book of the week'} · ${d}`;
     return week.includes('-W') ? `Week ${Number(week.split('-W')[1])} · ${d}` : d;
   })(),
   episodeTitle: titleParts.length > 1 ? titleParts.slice(1).join(': ') : meta.title,
@@ -97,6 +99,7 @@ const longProps = {
   credit: config.podcast?.credit || '',
   disclosure: config.podcast?.ai_disclosure || '',
   daily: Boolean(config.formats?.daily),
+  format: meta.format || 'weekly',
   site: (config.podcast?.base_url || '').replace(/^https?:\/\//, '').replace(/\/$/, ''),
 };
 

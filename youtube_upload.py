@@ -40,6 +40,9 @@ SEGMENT_NAMES = {
     "macro": "Macro and trade", "numbers": "The numbers", "events_ahead": "Events ahead",
     "quick_hits": "Quick hits", "sign_off": "Sign-off", "week_threads": "The week's threads",
     "voices": "Expert voices", "week_ahead": "The week ahead",
+    "book_open": "Opening", "book_intro": "Today's book", "book_context": "The book and its author",
+    "big_ideas": "The big ideas", "for_planners": "Why it matters now", "reading_guide": "How to read it",
+    "shelf": "Also on the shelf", "book_sign_off": "Sign-off",
 }
 
 
@@ -47,7 +50,7 @@ def chapters(timeline: list[dict]) -> list[str]:
     rows, seen = ["0:00 Intro"], set()
     for e in timeline:
         seg = e["segment"]
-        if seg in seen or seg in ("cold_open", "welcome"):
+        if seg in seen or seg in ("cold_open", "welcome", "book_open", "book_intro"):
             seen.add(seg)
             continue
         seen.add(seg)
