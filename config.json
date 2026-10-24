@@ -57,7 +57,7 @@
     "loudness_lufs": -16,
     "true_peak_db": -1.5,
     "mp3_bitrate": "128k",
-    "speech_tempo": 1.08
+    "speech_tempo": 1.12
   },
   "youtube": {
     "privacy": "public",
