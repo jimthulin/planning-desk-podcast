@@ -2,19 +2,33 @@ export const W = 1920;
 export const H = 1080;
 export const FPS = 30;
 
+// Editorial "paper" palette, matched to Jim's LinkedIn motion graphics.
 export const C = {
-  ink: '#0C1421',
-  ink2: '#142236',
-  ink3: '#1C2E47',
-  line: 'rgba(138,152,170,0.22)',
-  white: '#F4F1EA',
-  muted: '#8A98AA',
-  amber: '#F2A33A',
-  teal: '#3BC4B4',
-  red: '#E5604D',
+  paper: '#EEE3DE',   // background
+  paper2: '#E6D9D3',  // panels, empty bar tracks
+  band: '#DDD1CB',    // highlight bands (e.g. "peak season")
+  grid: '#D6C9C3',    // gridlines, rules
+  ink: '#17434B',     // headlines, primary data (dark teal)
+  text: '#2B2523',    // body text
+  sub: '#4B4441',     // secondary text
+  muted: '#8C837F',   // axis labels, footnotes
+  orange: '#E8562A',  // accent: the number that hurts, alerts
+  blue: '#2B8CB8',    // second series
+  sage: '#A7BCB6',    // neutral data (demand bars)
+  sand: '#EECF91',    // areas, excess
+  salmon: '#D98A72',  // soft warning fills
+  // Older names the templates use, mapped onto the paper palette:
+  white: '#17434B',
+  amber: '#E8562A',
+  teal: '#2B8CB8',
+  red: '#E8562A',
+  line: '#D6C9C3',
+  ink2: '#E6D9D3',
+  ink3: '#DDD1CB',
 };
 
-export const FONT = "'Inter', system-ui, sans-serif";
+export const FONT = "'Lato', 'Inter', system-ui, sans-serif";       // body, labels
+export const HEAD = "'Arimo', 'Arial', 'Helvetica', sans-serif";   // headlines and big numbers
 
 export const SEGMENT_LABELS = {
   cold_open: 'Top story',

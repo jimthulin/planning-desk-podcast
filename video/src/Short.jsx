@@ -1,6 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {AbsoluteFill, Audio, Sequence, continueRender, delayRender, interpolate, staticFile, useCurrentFrame} from 'remotion';
-import {C, FONT, FPS} from './theme.js';
+import {C, FONT, HEAD, FPS} from './theme.js';
+import {Wordmark, Mark} from './components/Chrome.jsx';
 import {LayoutCtx} from './layout.js';
 import {Background} from './components/Background.jsx';
 import {Scene, useEnter} from './components/Scene.jsx';
@@ -26,7 +27,7 @@ const ITEM_TEMPLATES = new Set(['list', 'timeline', 'flow']);
 const useFonts = () => {
   const [handle] = useState(() => delayRender('fonts'));
   useEffect(() => {
-    Promise.all([500, 600, 700, 800, 900].map((w) => document.fonts.load(`${w} 40px Inter`)))
+    Promise.all([...[400, 700].map((w) => `${w} 40px Arimo`), ...[400, 700, 900].map((w) => `${w} 40px Lato`)].map((f) => document.fonts.load(f)))
       .then(() => continueRender(handle)).catch(() => continueRender(handle));
   }, [handle]);
 };
@@ -42,12 +43,9 @@ const cueStart = (cue, lines) => {
 
 const Header = ({show, dateLabel}) => (
   <div style={{position: 'absolute', top: 160, left: 70, right: 70, fontFamily: FONT, display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-    <div style={{display: 'flex', alignItems: 'center', gap: 18}}>
-      <div style={{width: 14, height: 56, background: C.amber, borderRadius: 3}} />
-      <div>
-        <div style={{color: C.white, fontSize: 36, fontWeight: 900, letterSpacing: 1.5}}>{(show || '').toUpperCase()}</div>
-        <div style={{color: C.muted, fontSize: 26, fontWeight: 600, marginTop: 2}}>{dateLabel}</div>
-      </div>
+    <div>
+      <Wordmark size={56} />
+      <div style={{color: C.sub, fontSize: 26, marginTop: 8, marginLeft: 78}}>{dateLabel}</div>
     </div>
     <div style={{color: C.muted, border: `2px solid ${C.line}`, fontSize: 20, fontWeight: 600, padding: '8px 16px', borderRadius: 999}}>AI-generated</div>
   </div>
@@ -75,11 +73,11 @@ const Captions = ({lines, t}) => {
   return (
     <div style={{position: 'absolute', top: STAGE.top + STAGE.h + 20, left: 60, right: 150, display: 'flex', justifyContent: 'center'}}>
       <div style={{fontFamily: FONT, fontSize: 60, fontWeight: 900, lineHeight: 1.18, textAlign: 'center', transform: `scale(${pop})`,
-        textShadow: '0 4px 18px rgba(0,0,0,0.6)'}}>
+        textShadow: 'none'}}>
         {chunk.map((w, i) => {
           const next = chunk[i + 1];
           const on = t >= w.t && (!next || t < next.t);
-          return <span key={i} style={{color: on ? C.amber : t >= w.t ? C.white : 'rgba(244,241,234,0.45)'}}>{w.w}{i < chunk.length - 1 ? ' ' : ''}</span>;
+          return <span key={i} style={{color: on ? C.amber : t >= w.t ? C.ink : 'rgba(23,67,75,0.38)'}}>{w.w}{i < chunk.length - 1 ? ' ' : ''}</span>;
         })}
       </div>
     </div>
@@ -91,9 +89,9 @@ const EndCard = ({show, cta}) => {
   const q = useEnter(8, 16);
   return (
     <AbsoluteFill style={{justifyContent: 'center', alignItems: 'center', fontFamily: FONT, padding: '0 90px', textAlign: 'center'}}>
-      <div style={{color: C.amber, fontSize: 34, fontWeight: 800, letterSpacing: 4, textTransform: 'uppercase', opacity: p}}>Full episode</div>
-      <div style={{color: C.white, fontSize: 88, fontWeight: 900, lineHeight: 1.05, marginTop: 20, opacity: p, transform: `scale(${0.9 + 0.1 * p})`}}>{show}</div>
-      <div style={{color: C.white, opacity: 0.8 * q, fontSize: 40, fontWeight: 600, marginTop: 30, lineHeight: 1.3}}>{cta}</div>
+      <div style={{opacity: p}}><Mark size={120} /></div>
+      <div style={{fontFamily: HEAD, color: C.orange, fontSize: 88, fontWeight: 700, lineHeight: 1.05, marginTop: 30, opacity: p, transform: `translateY(${(1 - p) * 16}px)`}}>{show}</div>
+      <div style={{color: C.text, opacity: q, fontSize: 42, marginTop: 30, lineHeight: 1.3}}>{cta}</div>
     </AbsoluteFill>
   );
 };
@@ -139,7 +137,7 @@ export const Short = (props) => {
       </Sequence>
       {t < endCardSec && <Header show={props.show} dateLabel={props.dateLabel} />}
       {t < endCardSec && <Captions lines={lines} t={t} />}
-      <div style={{position: 'absolute', top: 0, left: 0, height: 8, width: SW * progress, background: C.amber}} />
+      <div style={{position: 'absolute', top: 0, left: 0, height: 8, width: SW * progress, background: C.ink}} />
       {props.audioFile && <Audio src={staticFile(props.audioFile)} />}
     </AbsoluteFill>
   );

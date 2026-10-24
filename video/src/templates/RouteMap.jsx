@@ -4,7 +4,7 @@ import {geoMercator, geoPath} from 'd3-geo';
 import {feature} from 'topojson-client';
 import world110 from 'world-atlas/countries-110m.json';
 import world50 from 'world-atlas/countries-50m.json';
-import {C, FONT} from '../theme.js';
+import {C, FONT, HEAD} from '../theme.js';
 import {Kicker} from './Cards.jsx';
 import {useLayout} from '../layout.js';
 
@@ -17,8 +17,8 @@ const countries50 = feature(world50, world50.objects.countries);
 // and pins ({name, lat, lon, alert, muted}). The view fits everything shown.
 export const RouteMap = ({kicker, title, routes = [], points = [], pad = 8}) => {
   const frame = useCurrentFrame();
-  const {v, w: SW, h: SH} = useLayout();
-  const BOX = v ? BOX_V : BOX_H;
+  const {v, w: SW, h: SH, bare} = useLayout();
+  const BOX = useMemo(() => (bare ? {x: 0, y: 0, w: SW, h: SH - 70} : v ? BOX_V : BOX_H), [bare, v, SW, SH]);
 
   const geo = useMemo(() => {
     const coords = [
@@ -34,7 +34,9 @@ export const RouteMap = ({kicker, title, routes = [], points = [], pad = 8}) => 
       type: 'Feature',
       geometry: {type: 'MultiPoint', coordinates: [[minLon, minLat], [maxLon, maxLat], [minLon, maxLat], [maxLon, minLat]]},
     };
-    const projection = geoMercator().fitExtent([[BOX.x, BOX.y], [BOX.x + BOX.w, BOX.y + BOX.h]], bboxFeature);
+    // In the chart panel, keep room on the right for pin labels.
+    const inset = bare ? [40, 40, 200, 40] : [0, 0, 0, 0];
+    const projection = geoMercator().fitExtent([[BOX.x + inset[0], BOX.y + inset[1]], [BOX.x + BOX.w - inset[2], BOX.y + BOX.h - inset[3]]], bboxFeature);
     const path = geoPath(projection);
     const land = span < 45 ? countries50 : countries110;
     const countryPaths = land.features.map((f) => path(f)).filter(Boolean);
@@ -54,7 +56,7 @@ export const RouteMap = ({kicker, title, routes = [], points = [], pad = 8}) => 
     });
     const projPoints = points.map((p) => ({...p, xy: projection([p.lon, p.lat])}));
     return {countryPaths, projRoutes, projPoints};
-  }, [routes, points, pad, BOX]);
+  }, [routes, points, pad, BOX, bare]);
 
   const mapIn = interpolate(frame, [0, 14], [0, 1], {extrapolateRight: 'clamp'});
 
@@ -62,12 +64,12 @@ export const RouteMap = ({kicker, title, routes = [], points = [], pad = 8}) => 
     <AbsoluteFill style={{fontFamily: FONT}}>
       <svg width={SW} height={SH} style={{position: 'absolute', opacity: mapIn}}>
         <defs>
-          <clipPath id="mapclip"><rect x={BOX.x} y={BOX.y} width={BOX.w} height={BOX.h} rx={28} /></clipPath>
+          <clipPath id="mapclip"><rect x={BOX.x} y={BOX.y} width={BOX.w} height={BOX.h} rx={6} /></clipPath>
         </defs>
         <g clipPath="url(#mapclip)">
-          <rect x={BOX.x} y={BOX.y} width={BOX.w} height={BOX.h} fill="#08101C" />
+          <rect x={BOX.x} y={BOX.y} width={BOX.w} height={BOX.h} fill={C.paper} />
           {geo.countryPaths.map((d, i) => (
-            <path key={i} d={d} fill="#2B4566" stroke="#41618A" strokeWidth={1.2} />
+            <path key={i} d={d} fill={C.paper2} stroke={C.grid} strokeWidth={1.2} />
           ))}
           {geo.projRoutes.map((r, i) => {
             const start = 12 + i * 22;
@@ -90,13 +92,13 @@ export const RouteMap = ({kicker, title, routes = [], points = [], pad = 8}) => 
               return (
                 <g key={`s${i}-${k}`} opacity={ready}>
                   <circle cx={sx} cy={sy} r={14} fill={C.amber} opacity={0.25} />
-                  <circle cx={sx} cy={sy} r={7} fill={C.white} />
+                  <circle cx={sx} cy={sy} r={7} fill={C.ink} />
                 </g>
               );
             });
           })}
         </g>
-        <rect x={BOX.x} y={BOX.y} width={BOX.w} height={BOX.h} rx={28} fill="none" stroke={C.line} strokeWidth={2} />
+        <rect x={BOX.x} y={BOX.y} width={BOX.w} height={BOX.h} rx={6} fill="none" stroke={C.line} strokeWidth={2} />
         {geo.projPoints.map((p, i) => {
           const start = 18 + i * 8;
           const x = interpolate(frame, [start, start + 12], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
@@ -108,16 +110,26 @@ export const RouteMap = ({kicker, title, routes = [], points = [], pad = 8}) => 
               {p.alert && <circle cx={cx} cy={cy} r={14 + pulse * 46} fill="none" stroke={C.red} strokeWidth={4} strokeOpacity={1 - pulse} />}
               <circle cx={cx} cy={cy} r={13 * x} fill={color} stroke={C.ink} strokeWidth={4} />
               <text x={cx + 24} y={cy + 10} fill={p.muted ? C.muted : C.white} fontSize={v ? 34 : 30} fontWeight={700}
-                style={{paintOrder: 'stroke', stroke: C.ink, strokeWidth: 8, strokeLinejoin: 'round'}}>{p.name}</text>
+                fontFamily={HEAD} style={{paintOrder: 'stroke', stroke: C.paper, strokeWidth: 8, strokeLinejoin: 'round'}}>{p.name}</text>
             </g>
           );
         })}
       </svg>
-      {(kicker || title) && (
+      {bare && routes.some((r) => r.label) && (
+        <div style={{position: 'absolute', left: 0, top: SH - 44, display: 'flex', gap: 28, opacity: mapIn}}>
+          {routes.filter((r) => r.label).map((r, i) => (
+            <div key={i} style={{display: 'flex', alignItems: 'center', gap: 10, color: C.sub, fontSize: 24, whiteSpace: 'nowrap'}}>
+              <div style={{width: 40, height: 5, borderRadius: 2, background: r.style === 'faded' ? C.muted : C.orange}} />
+              {r.label}
+            </div>
+          ))}
+        </div>
+      )}
+      {!bare && (kicker || title) && (
         <div style={{position: 'absolute', left: BOX.x + 6, top: v ? 10 : 146, right: BOX.x, opacity: mapIn, display: 'flex', flexDirection: v ? 'column' : 'row', alignItems: v ? 'flex-start' : 'flex-end', justifyContent: 'space-between', gap: v ? 14 : 40}}>
           <div>
             {kicker && <Kicker>{kicker}</Kicker>}
-            {title && <div style={{color: C.white, fontSize: v ? 48 : 56, fontWeight: 800, lineHeight: 1.1, marginTop: 14, maxWidth: v ? 960 : 1350}}>{title}</div>}
+            {title && <div style={{fontFamily: HEAD, color: C.ink, fontSize: v ? 48 : 56, fontWeight: 700, lineHeight: 1.1, marginTop: 14, maxWidth: v ? 960 : 1350}}>{title}</div>}
           </div>
           {routes.some((r) => r.label) && (
             <div style={{display: 'flex', gap: 28, paddingBottom: 10}}>

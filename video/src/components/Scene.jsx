@@ -7,8 +7,8 @@ export const Scene = ({dur, bare, children}) => {
   const fadeIn = bare ? 1 : interpolate(frame, [0, 8], [0, 1], {extrapolateRight: 'clamp'});
   const fadeOut = interpolate(frame, [dur - 8, dur], [1, 0], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
   // Slow push-in so a graphic never sits perfectly still.
-  const push = bare ? 1 : interpolate(frame, [0, Math.max(1, dur)], [1, 1.04], {extrapolateRight: 'clamp'});
-  const drift = bare ? 0 : interpolate(frame, [0, Math.max(1, dur)], [0, -10], {extrapolateRight: 'clamp'});
+  const push = 1;
+  const drift = bare ? 0 : interpolate(frame, [0, 10], [12, 0], {extrapolateRight: 'clamp'});
   return (
     <AbsoluteFill style={{opacity: Math.min(fadeIn, dur > 16 ? fadeOut : 1), transform: `scale(${push}) translateY(${drift}px)`, transformOrigin: '50% 45%'}}>
       {children}

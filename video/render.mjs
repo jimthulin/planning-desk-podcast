@@ -83,7 +83,10 @@ const shortProps = {
 };
 const longProps = {
   show: config.show,
-  week: week.includes('-W') ? `Week ${week.split('-W')[1]} · ${meta.run_date || ''}` : meta.run_date || '',
+  week: (() => {
+    const d = meta.run_date ? new Date(`${meta.run_date}T12:00:00Z`).toLocaleDateString('en-GB', {weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC'}) : '';
+    return week.includes('-W') ? `Week ${Number(week.split('-W')[1])} · ${d}` : d;
+  })(),
   episodeTitle: titleParts.length > 1 ? titleParts.slice(1).join(': ') : meta.title,
   totalSec,
   outroStartSec,
