@@ -157,7 +157,7 @@ def write_episode_page(cfg: dict, e: dict, script: dict, meta: dict) -> None:
 <div class="card">{e['notes_html']}</div>
 <h2>Transcript</h2>
 <div class="t">{"".join(rows)}</div>
-<p class="meta" style="margin-top:32px">Made in partnership with Optilon. {html.escape(pod['ai_disclosure'])}</p>
+<p class="meta" style="margin-top:32px">{html.escape(pod['ai_disclosure'])}</p>
 </main></body></html>
 """
     (PAGES / f"{e['stem']}.html").write_text(page, encoding="utf-8")

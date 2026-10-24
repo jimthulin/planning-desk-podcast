@@ -94,7 +94,7 @@ const longProps = {
   cues,
   envelope,
   audioFile,
-  credit: config.podcast?.description?.includes('partnership with Optilon') ? 'Made in partnership with Optilon' : '',
+  credit: config.podcast?.credit || '',
   disclosure: config.podcast?.ai_disclosure || '',
   daily: Boolean(config.formats?.daily),
   site: (config.podcast?.base_url || '').replace(/^https?:\/\//, '').replace(/\/$/, ''),

@@ -178,7 +178,7 @@ jobs:
           python youtube_upload.py "${{ steps.pick.outputs.stem }}"
           gh release upload "episode-${{ steps.pick.outputs.stem }}" "build/out/planning-desk-${{ steps.pick.outputs.stem }}.youtube.txt" --clobber
 
-      - name: Share on LinkedIn (Jim's profile)
+      - name: Share on LinkedIn (owner's profile)
         if: ${{ inputs.fake != true && steps.pick.outputs.format == 'weekly' && steps.pick.outputs.test != 'true' && env.LINKEDIN_TOKEN != '' }}
         continue-on-error: true
         run: python linkedin_post.py "${{ steps.pick.outputs.stem }}"

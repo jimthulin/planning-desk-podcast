@@ -41,7 +41,7 @@ def main() -> int:
         if pod.get(key):
             links.append(f"[{name}]({pod[key]})")
     body = "\n\n".join([letter["body_md"].strip(), " · ".join(links), "---",
-                        f"*{pod['ai_disclosure']} Made in partnership with Optilon.*"])
+                        f"*{pod['ai_disclosure']}*"])
 
     req = urllib.request.Request(
         "https://api.buttondown.com/v1/emails",

@@ -2,7 +2,7 @@ export const W = 1920;
 export const H = 1080;
 export const FPS = 30;
 
-// Editorial "paper" palette, matched to Jim's LinkedIn motion graphics.
+// Editorial "paper" palette, matched to the show's LinkedIn motion graphics.
 export const C = {
   paper: '#EEE3DE',   // background
   paper2: '#E6D9D3',  // panels, empty bar tracks

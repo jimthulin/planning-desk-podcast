@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Share the Sunday episode on Jim's own LinkedIn profile ("Share on LinkedIn", w_member_social).
+"""Share the Sunday episode on the owner's own LinkedIn profile ("Share on LinkedIn", w_member_social).
 
 Posts the script's linkedin.profile_post text with a link card to the YouTube video (or the
 episode page when there's no video). Self-serve LinkedIn tokens last 60 days and can't be
