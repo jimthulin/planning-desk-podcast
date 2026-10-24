@@ -77,7 +77,7 @@ def main() -> int:
     sources = [s for s in notes.get("sources", []) if s.get("url")]
     if sources:
         desc += ["Sources"] + [f"{s.get('title') or s['url']}: {s['url']}" for s in sources] + [""]
-    desc += [pod["ai_disclosure"], "Made in partnership with Optilon.", "",
+    desc += [pod["ai_disclosure"], "",
              f"Podcast feed: {pod['base_url'].rstrip('/')}/feed.xml"]
     description = "\n".join(desc).strip()[:4900]
 

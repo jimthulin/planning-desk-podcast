@@ -15,7 +15,7 @@ import {Timeline} from './templates/Timeline.jsx';
 import {Flow} from './templates/Flow.jsx';
 import {Voice} from './templates/Voice.jsx';
 
-// Editorial split layout, after Jim's LinkedIn films: the words on the left (headline, a line
+// Editorial split layout, after the show's LinkedIn films: the words on the left (headline, a line
 // of context, up to two KPIs), one chart on the right that stays put while the story moves on.
 //
 // Cue schema (new):  {line, at?, kicker?, headline, sub?, kpis?: [{value, prefix, suffix, decimals, label, accent}],
