@@ -25,13 +25,13 @@
   "voices": {
     "F": {
       "name": "Anna",
-      "voice_id": "99Hm6N8psCBzc1JwEVR2",
-      "elevenlabs_voice": "Riley - Charismatic News Anchor/Host"
+      "voice_id": "oNRN9HppGQaRc2aCxlG9",
+      "elevenlabs_voice": "Astrid - Earthy and expressive"
     },
     "M": {
       "name": "Erik",
-      "voice_id": "tNIuvXGG5RnGdTbvfnPR",
-      "elevenlabs_voice": "Robert - American standard broadcaster"
+      "voice_id": "1TE7ou3jyxHsyRehUuMB",
+      "elevenlabs_voice": "Eastend Steve"
     }
   },
   "tts": {
